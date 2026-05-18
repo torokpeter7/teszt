@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rólam – NetKapocs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="mainNav">
+  <a class="logo" href="index.html">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </div>
+    Net<span>Kapocs</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Főoldal</a></li>
+    <li><a href="szolgaltatasok.html">Szolgáltatások</a></li>
+    <li><a href="eszkozok.html">Eszközök</a></li>
+    <li><a href="rolam.html" class="active">Rólam</a></li>
+    <li><a href="kapcsolat.html" class="nav-cta">Kapcsolat</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ABOUT HEADER -->
+<div style="background:var(--gray-50);padding:4rem 2rem 3rem;border-bottom:1px solid var(--gray-200)">
+  <div class="about-header-grid" style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:3rem;align-items:start">
+    <div class="about-avatar" style="display:flex;flex-direction:column;align-items:center;gap:12px">
+      <div style="width:160px;height:160px;background:var(--navy);border-radius:20px;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-size:3.5rem;font-weight:800;color:var(--blue-light)">NP</div>
+      <div style="display:inline-flex;align-items:center;gap:6px;background:#DCFCE7;color:#166534;font-size:.8rem;font-weight:600;padding:4px 12px;border-radius:100px">
+        <span style="width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;display:inline-block"></span>Elérhető
+      </div>
+    </div>
+    <div>
+      <h1 style="font-size:2.2rem;font-weight:800;margin-bottom:.4rem">NetKapocs Szakember</h1>
+      <div style="color:var(--blue);font-weight:600;font-size:1.05rem;margin-bottom:1rem">Otthoni hálózat kiépítési specialista</div>
+      <p style="color:var(--gray-600);line-height:1.75;max-width:640px">Bács-Kiskun Vármegyében és körzetében nyújtok otthoni hálózat kiépítési és fejlesztési szolgáltatásokat. Fő szakterületem a WiFi rendszerek tervezése és telepítése – TP-Link, Ubiquiti UniFi és MikroTik eszközökkel egyaránt profi szinten dolgozom. Célom, hogy minden ügyfél otthonában stabil, gyors és biztonságos legyen az internet kapcsolat.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section class="section">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="about-skills-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+
+      <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.5rem">
+        <h3 style="font-size:1rem;font-weight:700;margin-bottom:1.1rem;display:flex;align-items:center;gap:8px">
+          <svg width="18" height="18" viewBox="0 0 24 24" style="stroke:var(--blue);fill:none;stroke-width:2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/></svg>
+          WiFi &amp; hálózati eszközök
+        </h3>
+        <div style="margin-bottom:14px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:.9rem;font-weight:500">TP-Link (Deco, Archer)</span><span style="font-size:.8rem;color:var(--gray-400)">Profi</span></div>
+          <div style="height:6px;background:var(--gray-100);border-radius:3px"><div style="height:100%;width:95%;background:linear-gradient(90deg,var(--blue),var(--navy));border-radius:3px"></div></div>
+        </div>
+        <div style="margin-bottom:14px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:.9rem;font-weight:500">Ubiquiti UniFi</span><span style="font-size:.8rem;color:var(--gray-400)">Profi</span></div>
+          <div style="height:6px;background:var(--gray-100);border-radius:3px"><div style="height:100%;width:92%;background:linear-gradient(90deg,var(--blue),var(--navy));border-radius:3px"></div></div>
+        </div>
+        <div style="margin-bottom:14px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:.9rem;font-weight:500">MikroTik RouterOS</span><span style="font-size:.8rem;color:var(--gray-400)">Profi</span></div>
+          <div style="height:6px;background:var(--gray-100);border-radius:3px"><div style="height:100%;width:95%;background:linear-gradient(90deg,var(--blue),var(--navy));border-radius:3px"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:.9rem;font-weight:500">VLAN, VPN, Tűzfal</span><span style="font-size:.8rem;color:var(--gray-400)">Haladó</span></div>
+          <div style="height:6px;background:var(--gray-100);border-radius:3px"><div style="height:100%;width:85%;background:var(--blue);border-radius:3px"></div></div>
+        </div>
+      </div>
+
+      <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.5rem">
+        <h3 style="font-size:1rem;font-weight:700;margin-bottom:1.1rem;display:flex;align-items:center;gap:8px">
+          <svg width="18" height="18" viewBox="0 0 24 24" style="stroke:var(--blue);fill:none;stroke-width:2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          Szakmai erősségek
+        </h3>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem">
+          <span class="badge badge-blue" style="padding:5px 12px;font-size:.82rem">WiFi tervezés</span>
+          <span class="badge badge-navy" style="padding:5px 12px;font-size:.82rem">Dokumentálás</span>
+          <span class="badge badge-green" style="padding:5px 12px;font-size:.82rem">Hibaelhárítás</span>
+          <span class="badge badge-orange" style="padding:5px 12px;font-size:.82rem">Precizitás</span>
+          <span class="badge badge-blue" style="padding:5px 12px;font-size:.82rem">Ügyfélközpontú</span>
+          <span class="badge badge-navy" style="padding:5px 12px;font-size:.82rem">Megbízhatóság</span>
+          <span class="badge badge-green" style="padding:5px 12px;font-size:.82rem">Rugalmasság</span>
+          <span class="badge badge-orange" style="padding:5px 12px;font-size:.82rem">Átláthatóság</span>
+        </div>
+        <div style="background:var(--blue-pale);border-radius:8px;padding:1rem 1.1rem">
+          <div style="font-family:'Outfit',sans-serif;font-weight:700;color:var(--navy);margin-bottom:.4rem;font-size:.95rem">💬 Kommunikáció</div>
+          <p style="font-size:.84rem;color:var(--gray-600);line-height:1.65">Érthetően, szakzsargon nélkül kommunikálok – nem csak megoldom a problémát, el is magyarázom mi volt a gond és hogyan kerülhető el a jövőben.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section-alt" style="padding-top:3rem">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">GYIK</div>
+      <h2>Gyakori kérdések</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Milyen területen vállalok munkát?
+          <svg class="faq-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">Elsősorban Bács-Kiskun Vármegye és 30-40 km-es körzetében vállalok helyszíni munkát. Nagy projekt esetén távolabb is megyek – egyeztetés alapján.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Mennyi ideig tart egy otthoni hálózat kiépítése?
+          <svg class="faq-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">Egy átlagos, 2–3 szobás lakás hálózatának kiépítése vagy fejlesztése általában 2–4 óra alatt elvégezhető. Nagyobb ház, több access point vagy kábelezési munka esetén ez 1 egész napot vehet igénybe. A helyszíni felmérés után pontosabb időbecslést adok.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Szükséges-e a meglévő routerem lecserélése?
+          <svg class="faq-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">Nem feltétlenül. Először megvizsgálom a meglévő eszközt – sokszor egyszerű konfigurációs módosítással vagy egy plusz access point hozzáadásával sokat lehet javítani. Ha mégis szükséges csere, az igényeknek megfelelő eszközt javaslok.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Az eszközök árát is felszámolja, vagy csak a munkadíjat?
+          <svg class="faq-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">Az ajánlatban külön szerepel az eszközök ára és a munkadíj – teljes átláthatósággal. Az eszközöket be tudom szerezni, de ha Ön maga vásárolja meg, akkor is elvégzem a telepítést és konfigurálást.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Vállal garanciát az elvégzett munkára?
+          <svg class="faq-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">Igen, az elvégzett munkákra 30 napos garanciát vállalok. Ha valami nem működik megfelelően, visszajövök és javítom – ingyenesen.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Hétvégén is elérhető?
+          <svg class="faq-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">Igen! Szombaton is vállalok munkát 9:00–14:00 között. Munkaidőn kívüli megkeresésekre is reagálok, és ha szükséges, egyedi időpontot egyeztetünk.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Net<span>Kapocs</span></div>
+      <div class="footer-desc">Stabil WiFi minden szobában. Profi TP-Link, Ubiquiti és MikroTik eszközökkel. Bács-Kiskun Vármegye.</div>
+    </div>
+    <div class="footer-col">
+      <h4>Oldalak</h4>
+      <a href="index.html">Főoldal</a>
+      <a href="szolgaltatasok.html">Szolgáltatások</a>
+      <a href="eszkozok.html">Eszközök</a>
+      <a href="rolam.html">Rólam</a>
+      <a href="kapcsolat.html">Kapcsolat</a>
+    </div>
+    <div class="footer-col">
+      <h4>Eszközök</h4>
+      <a href="eszkozok.html">🔵 TP-Link</a>
+      <a href="eszkozok.html">🟢 Ubiquiti UniFi</a>
+      <a href="eszkozok.html">🔴 MikroTik</a>
+    </div>
+    <div class="footer-col">
+      <h4>Elérhetőség</h4>
+      <a href="tel:+36309654445">+36 30 965 4445</a>
+      <a href="mailto:mail.torokpeter@gmail.com">mail.torokpeter@gmail.com</a>
+      <a>Bács-Kiskun Vármegye</a>
+      <a>H–P: 8:00–18:00</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 NetKapocs – Minden jog fenntartva</span>
+    <span>Otthoni hálózat kiépítési specialista</span>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  const nav = document.getElementById('navLinks');
+  const btn = document.getElementById('hamburger');
+  nav.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  const nav = document.getElementById('navLinks');
+  const btn = document.getElementById('hamburger');
+  if (!nav.contains(e.target) && !btn.contains(e.target)) {
+    nav.classList.remove('open');
+    btn.classList.remove('open');
+  }
+});
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>

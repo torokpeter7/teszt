@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kapcsolat – NetKapocs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="mainNav">
+  <a class="logo" href="index.html">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </div>
+    Net<span>Kapocs</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Főoldal</a></li>
+    <li><a href="szolgaltatasok.html">Szolgáltatások</a></li>
+    <li><a href="eszkozok.html">Eszközök</a></li>
+    <li><a href="rolam.html">Rólam</a></li>
+    <li><a href="kapcsolat.html" class="active nav-cta">Kapcsolat</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- CONTACT PAGE HEADER -->
+<div style="background:var(--navy);color:white;padding:3.5rem 2rem 2.5rem">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="section-tag" style="margin-bottom:.8rem">Kapcsolat</div>
+    <h1 style="color:white;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;margin-bottom:.75rem">Vegye fel velem a kapcsolatot!</h1>
+    <p style="color:rgba(255,255,255,0.7);max-width:560px;font-size:1rem;line-height:1.7">Ingyenes konzultáció és helyszíni felmérés – írjon üzenetet vagy hívjon közvetlenül. Kötelezettség nélkül.</p>
+  </div>
+</div>
+
+<!-- CONTACT CONTENT -->
+<section class="section section-alt" style="padding-top:3.5rem">
+  <div class="contact-grid" style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1.5fr;gap:3rem;align-items:start">
+
+    <!-- LEFT: Contact info -->
+    <div>
+      <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:1.25rem">
+        <div style="width:42px;height:42px;background:var(--blue-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="20" height="20" viewBox="0 0 24 24" style="stroke:var(--blue);fill:none;stroke-width:2;stroke-linecap:round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <div>
+          <div style="font-size:.88rem;color:var(--gray-400);font-weight:500;margin-bottom:2px">Telefon</div>
+          <a href="tel:+36309654445" style="color:var(--navy);font-weight:600;font-size:.95rem;text-decoration:none">+36 30 965 4445</a>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:1.25rem">
+        <div style="width:42px;height:42px;background:var(--blue-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="20" height="20" viewBox="0 0 24 24" style="stroke:var(--blue);fill:none;stroke-width:2;stroke-linecap:round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <div style="font-size:.88rem;color:var(--gray-400);font-weight:500;margin-bottom:2px">E-mail</div>
+          <a href="mailto:mail.torokpeter@gmail.com" style="color:var(--navy);font-weight:600;font-size:.95rem;text-decoration:none">mail.torokpeter@gmail.com</a>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:1.25rem">
+        <div style="width:42px;height:42px;background:var(--blue-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="20" height="20" viewBox="0 0 24 24" style="stroke:var(--blue);fill:none;stroke-width:2;stroke-linecap:round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <div style="font-size:.88rem;color:var(--gray-400);font-weight:500;margin-bottom:2px">Helyszín</div>
+          <div style="color:var(--navy);font-weight:600;font-size:.95rem">Bács-Kiskun Vármegye és 40 km-es körzetében</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:1.5rem">
+        <div style="width:42px;height:42px;background:var(--blue-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="20" height="20" viewBox="0 0 24 24" style="stroke:var(--blue);fill:none;stroke-width:2;stroke-linecap:round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <div style="font-size:.88rem;color:var(--gray-400);font-weight:500;margin-bottom:2px">Nyitvatartás</div>
+          <div style="color:var(--navy);font-weight:600;font-size:.95rem">H–P: 8:00–18:00 | Szo: 9:00–12:00</div>
+        </div>
+      </div>
+
+      <div style="background:var(--blue-pale);border:1px solid rgba(14,143,224,0.2);border-radius:var(--radius);padding:1.25rem">
+        <div style="font-weight:700;color:var(--navy);margin-bottom:4px;font-family:'Outfit',sans-serif">💬 Ingyenes konzultáció</div>
+        <div style="font-size:.88rem;color:var(--gray-600)">Minden megkeresés ingyenes – díjmentes felmérés, kötelezettség nélkül.</div>
+      </div>
+
+      <!-- Quick action buttons -->
+      <div style="margin-top:1.5rem;display:flex;flex-direction:column;gap:10px">
+        <a href="tel:+36309654445" class="btn btn-primary" style="justify-content:center;width:100%">
+          <svg width="16" height="16" viewBox="0 0 24 24" style="fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.47 19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          Hívjon most!
+        </a>
+        <a href="mailto:mail.torokpeter@gmail.com" class="btn btn-dark" style="justify-content:center;width:100%">
+          <svg width="16" height="16" viewBox="0 0 24 24" style="fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          E-mail küldése
+        </a>
+      </div>
+    </div>
+
+    <!-- RIGHT: Map placeholder + info -->
+    <div>
+      <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);overflow:hidden">
+        <!-- Map placeholder -->
+        <div style="background:linear-gradient(135deg,var(--navy) 0%,#243354 100%);padding:2.5rem 2rem;text-align:center">
+          <div style="font-size:3rem;margin-bottom:1rem">📍</div>
+          <h3 style="color:white;font-size:1.2rem;margin-bottom:.5rem">Bács-Kiskun Vármegye</h3>
+          <p style="color:rgba(255,255,255,0.65);font-size:.9rem">Kiskunhalas és 40 km-es körzete</p>
+          <div style="margin-top:1.25rem;display:flex;justify-content:center;gap:.75rem;flex-wrap:wrap">
+            <span style="background:rgba(255,255,255,0.12);color:white;font-size:.78rem;padding:4px 10px;border-radius:100px">Kecskemét</span>
+            <span style="background:rgba(255,255,255,0.12);color:white;font-size:.78rem;padding:4px 10px;border-radius:100px">Kiskunhalas</span>
+            <span style="background:rgba(255,255,255,0.12);color:white;font-size:.78rem;padding:4px 10px;border-radius:100px">Kiskunfélegyháza</span>
+            <span style="background:rgba(255,255,255,0.12);color:white;font-size:.78rem;padding:4px 10px;border-radius:100px">Baja</span>
+            <span style="background:rgba(255,255,255,0.12);color:white;font-size:.78rem;padding:4px 10px;border-radius:100px">Kalocsa</span>
+            <span style="background:rgba(255,255,255,0.12);color:white;font-size:.78rem;padding:4px 10px;border-radius:100px">Kiskunmajsa</span>
+          </div>
+        </div>
+
+        <!-- Opening hours table -->
+        <div style="padding:1.5rem">
+          <h4 style="font-size:.95rem;font-weight:700;margin-bottom:1rem;color:var(--navy)">Nyitvatartás</h4>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--gray-100)">
+              <span style="font-size:.9rem;color:var(--gray-600)">Hétfő – Péntek</span>
+              <span style="font-size:.9rem;font-weight:600;color:var(--navy)">8:00 – 18:00</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--gray-100)">
+              <span style="font-size:.9rem;color:var(--gray-600)">Szombat</span>
+              <span style="font-size:.9rem;font-weight:600;color:var(--navy)">9:00 – 12:00</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0">
+              <span style="font-size:.9rem;color:var(--gray-600)">Vasárnap</span>
+              <span style="font-size:.9rem;font-weight:600;color:var(--gray-400)">Zárva</span>
+            </div>
+          </div>
+          <div style="margin-top:1.1rem;background:#F0FDF4;border:1px solid #86EFAC;border-radius:8px;padding:.75rem 1rem;font-size:.84rem;color:#166534">
+            <strong>📞 Gyors reagálás:</strong> Munkaidőn kívüli üzenetekre is reagálok – általában 24 órán belül visszajelzek.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Net<span>Kapocs</span></div>
+      <div class="footer-desc">Stabil WiFi minden szobában. Profi TP-Link, Ubiquiti és MikroTik eszközökkel. Bács-Kiskun Vármegye.</div>
+    </div>
+    <div class="footer-col">
+      <h4>Oldalak</h4>
+      <a href="index.html">Főoldal</a>
+      <a href="szolgaltatasok.html">Szolgáltatások</a>
+      <a href="eszkozok.html">Eszközök</a>
+      <a href="rolam.html">Rólam</a>
+      <a href="kapcsolat.html">Kapcsolat</a>
+    </div>
+    <div class="footer-col">
+      <h4>Eszközök</h4>
+      <a href="eszkozok.html">🔵 TP-Link</a>
+      <a href="eszkozok.html">🟢 Ubiquiti UniFi</a>
+      <a href="eszkozok.html">🔴 MikroTik</a>
+    </div>
+    <div class="footer-col">
+      <h4>Elérhetőség</h4>
+      <a href="tel:+36309654445">+36 30 965 4445</a>
+      <a href="mailto:mail.torokpeter@gmail.com">mail.torokpeter@gmail.com</a>
+      <a>Bács-Kiskun Vármegye</a>
+      <a>H–P: 8:00–18:00</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 NetKapocs – Minden jog fenntartva</span>
+    <span>Otthoni hálózat kiépítési specialista</span>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  const nav = document.getElementById('navLinks');
+  const btn = document.getElementById('hamburger');
+  nav.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  const nav = document.getElementById('navLinks');
+  const btn = document.getElementById('hamburger');
+  if (!nav.contains(e.target) && !btn.contains(e.target)) {
+    nav.classList.remove('open');
+    btn.classList.remove('open');
+  }
+});
+</script>
+</body>
+</html>

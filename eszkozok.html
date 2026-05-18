@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eszközök – NetKapocs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="mainNav">
+  <a class="logo" href="index.html">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </div>
+    Net<span>Kapocs</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Főoldal</a></li>
+    <li><a href="szolgaltatasok.html">Szolgáltatások</a></li>
+    <li><a href="eszkozok.html" class="active">Eszközök</a></li>
+    <li><a href="rolam.html">Rólam</a></li>
+    <li><a href="kapcsolat.html" class="nav-cta">Kapcsolat</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- PAGE HEADER -->
+<div style="background:var(--navy);color:white;padding:4rem 2rem 3rem">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="section-tag" style="margin-bottom:.8rem">Eszközök &amp; márkák</div>
+    <h1 style="color:white;font-size:clamp(2rem,4vw,2.8rem);font-weight:800;margin-bottom:.9rem">Melyik megoldás az Önnek való?</h1>
+    <p style="color:rgba(255,255,255,0.7);max-width:580px;font-size:1.02rem;line-height:1.75">Három megbízható márkával dolgozom – mindig az igényekhez és a költségkerethez leginkább illő eszközt ajánlom.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:1.5rem">
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;font-size:.84rem;font-weight:600;padding:6px 14px;border-radius:100px">
+        <span style="width:8px;height:8px;background:#10B981;border-radius:50%;display:inline-block"></span>TP-Link – Ár-érték
+      </div>
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;font-size:.84rem;font-weight:600;padding:6px 14px;border-radius:100px">
+        <span style="width:8px;height:8px;background:#10B981;border-radius:50%;display:inline-block"></span>Ubiquiti – Prémium
+      </div>
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;font-size:.84rem;font-weight:600;padding:6px 14px;border-radius:100px">
+        <span style="width:8px;height:8px;background:#10B981;border-radius:50%;display:inline-block"></span>MikroTik – Profi
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DEVICE CARDS -->
+<section class="section section-alt">
+  <div class="section-inner">
+    <div class="expertise-grid">
+
+      <!-- TP-LINK -->
+      <div style="background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:2rem;transition:all .2s">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem">
+          <div style="font-size:2.2rem">🔵</div>
+          <div>
+            <h3 style="font-size:1.2rem;margin-bottom:3px">TP-Link</h3>
+            <span class="badge badge-blue">Ár-érték király</span>
+          </div>
+        </div>
+        <p style="font-size:.88rem;color:var(--gray-600);line-height:1.65;margin-bottom:1.25rem">Kiváló választás kisebb-közepes otthonokhoz, ahol a megbízhatóság és az egyszerű kezelhetőség a prioritás. A Deco mesh rendszer különösen ajánlott nagyobb alapterületű házakhoz.</p>
+        <h4 style="font-size:.9rem;margin-bottom:.6rem;color:var(--navy)">Általam telepített modellek:</h4>
+        <ul class="detail-list">
+          <li><strong>TP-Link Deco</strong> – mesh WiFi, egyszerű mobilapp-os kezelés</li>
+          <li><strong>Archer sorozat</strong> – erős, megbízható router középkategóriában</li>
+          <li>WiFi 6 (802.11ax) támogatás – gyorsabb, több eszköz egyszerre</li>
+        </ul>
+        <div style="margin-top:1.25rem;background:var(--blue-pale);border-radius:8px;padding:.9rem 1rem;font-size:.84rem;color:var(--navy)">
+          <strong>Kinek ajánlom:</strong> 1–3 szobás lakás, kisebb ház, aki egyszerű kezelést szeretne megfizethetőbb áron.
+        </div>
+      </div>
+
+      <!-- UBIQUITI -->
+      <div style="background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:2rem;transition:all .2s">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem">
+          <div style="font-size:2.2rem">🟢</div>
+          <div>
+            <h3 style="font-size:1.2rem;margin-bottom:3px">Ubiquiti UniFi</h3>
+            <span class="badge badge-green">Prémium minőség</span>
+          </div>
+        </div>
+        <p style="font-size:.88rem;color:var(--gray-600);line-height:1.65;margin-bottom:1.25rem">Professzionális szintű hálózati megoldás – amit sok vállalkozás is alkalmaz, de otthoni környezetben is tökéletesen működik. Kiváló lefedettség, részletes monitoring, stabil kapcsolat.</p>
+        <h4 style="font-size:.9rem;margin-bottom:.6rem;color:var(--navy)">Általam telepített modellek:</h4>
+        <ul class="detail-list">
+          <li><strong>UniFi Access Point</strong> – ipari szintű WiFi erősítő, mennyezetre is szerelhető</li>
+          <li><strong>UniFi Dream Machine</strong> – all-in-one router + controller + tűzfal</li>
+          <li>Centralizált webes kezelőfelület – minden eszköz egy helyen</li>
+        </ul>
+        <div style="margin-top:1.25rem;background:#DCFCE7;border-radius:8px;padding:.9rem 1rem;font-size:.84rem;color:#166534">
+          <strong>Kinek ajánlom:</strong> Nagy ház, több szint, sok eszköz – aki a legjobb minőséget szeretné.
+        </div>
+      </div>
+
+      <!-- MIKROTIK -->
+      <div style="background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:2rem;transition:all .2s">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem">
+          <div style="font-size:2.2rem">🔴</div>
+          <div>
+            <h3 style="font-size:1.2rem;margin-bottom:3px">MikroTik</h3>
+            <span class="badge badge-orange">Maximális irányítás</span>
+          </div>
+        </div>
+        <p style="font-size:.88rem;color:var(--gray-600);line-height:1.65;margin-bottom:1.25rem">A hálózati szakemberek kedvence – teljes kontrollt ad a hálózat felett. Tűzfal, QoS, VPN, VLAN – minden beállítható. Komplex konfigurációt igényel, de én elvégzem Ön helyett.</p>
+        <h4 style="font-size:.9rem;margin-bottom:.6rem;color:var(--navy)">Általam telepített modellek:</h4>
+        <ul class="detail-list">
+          <li><strong>hAP sorozat</strong> – kompakt, erős home router</li>
+          <li><strong>RouterOS</strong> – profi szintű konfiguráció, tűzfal, QoS</li>
+          <li>VPN, VLAN, sávszélesség-kezelés teljes körűen</li>
+        </ul>
+        <div style="margin-top:1.25rem;background:#FEF3C7;border-radius:8px;padding:.9rem 1rem;font-size:.84rem;color:#92400E">
+          <strong>Kinek ajánlom:</strong> Tech-tudatos felhasználók, home office, NAS-szal rendelkezők, akik teljes kontrollt akarnak.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">Összehasonlítás</div>
+      <h2>Egymás mellett</h2>
+      <p>Egy táblázatban a három eszköz legfontosabb jellemzői.</p>
+    </div>
+    <div class="table-wrap" style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);overflow:hidden">
+      <table style="width:100%;border-collapse:collapse;font-size:.88rem;min-width:520px">
+        <thead>
+          <tr style="background:var(--navy);color:white">
+            <th style="padding:1rem 1.25rem;text-align:left;font-family:'Outfit',sans-serif">Szempont</th>
+            <th style="padding:1rem 1.25rem;text-align:center;font-family:'Outfit',sans-serif">🔵 TP-Link</th>
+            <th style="padding:1rem 1.25rem;text-align:center;font-family:'Outfit',sans-serif">🟢 Ubiquiti</th>
+            <th style="padding:1rem 1.25rem;text-align:center;font-family:'Outfit',sans-serif">🔴 MikroTik</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--gray-100)">
+            <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">Ár kategória</td>
+            <td style="padding:.9rem 1.25rem;text-align:center;color:var(--gray-600)">Közepes</td>
+            <td style="padding:.9rem 1.25rem;text-align:center;color:var(--gray-600)">Magas</td>
+            <td style="padding:.9rem 1.25rem;text-align:center;color:var(--gray-600)">Közepes</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--gray-100);background:var(--gray-50)">
+            <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">Kezelhetőség</td>
+            <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐⭐⭐⭐</td>
+            <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐⭐⭐</td>
+            <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--gray-100)">
+            <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">WiFi lefedettség</td>
+            <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐⭐⭐</td>
+            <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐⭐⭐⭐</td>
+            <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐⭐⭐</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--gray-100);background:var(--gray-50)">
+            <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">Tűzfal / VPN</td>
+            <td style="padding:.9rem 1.25rem;text-align:center;color:var(--gray-400)">Alapszintű</td>
+            <td style="padding:.9rem 1.25rem;text-align:center;color:var(--green)">Igen ✓</td>
+            <td style="padding:.9rem 1.25rem;text-align:center;color:var(--green)">Teljes körű ✓</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--gray-100)">
+            <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">Mesh rendszer</td>
+            <td style="padding:.9rem 1.25rem;text-align:center;color:var(--green)">Deco ✓</td>
+            <td style="padding:.9rem 1.25rem;text-align:center;color:var(--green)">UniFi ✓</td>
+            <td style="padding:.9rem 1.25rem;text-align:center;color:var(--green)">CAPsMAN ✓</td>
+          </tr>
+          <tr style="background:var(--gray-50)">
+            <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">Ajánlott esetben</td>
+            <td style="padding:.9rem 1.25rem;text-align:center;font-size:.82rem;color:var(--gray-600)">Kisebb lakás, egyszerű igény</td>
+            <td style="padding:.9rem 1.25rem;text-align:center;font-size:.82rem;color:var(--gray-600)">Nagy ház, igényes user</td>
+            <td style="padding:.9rem 1.25rem;text-align:center;font-size:.82rem;color:var(--gray-600)">Tech-tudatos, home office</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="text-align:center;margin-top:1rem;font-size:.84rem;color:var(--gray-600)">Nem biztos melyik a megfelelő? A helyszíni felmérés után én javaslom a legjobb megoldást – ingyenesen.</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <h2>Segítek megtalálni a legjobb megoldást!</h2>
+  <p>Ingyenes felmérés után pontos ajánlatot adok – melyik eszköz, hová, mennyiért.</p>
+  <a href="kapcsolat.html" class="btn btn-primary">Ingyenes felmérést kérek →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Net<span>Kapocs</span></div>
+      <div class="footer-desc">Stabil WiFi minden szobában. Profi TP-Link, Ubiquiti és MikroTik eszközökkel. Bács-Kiskun Vármegye.</div>
+    </div>
+    <div class="footer-col">
+      <h4>Oldalak</h4>
+      <a href="index.html">Főoldal</a>
+      <a href="szolgaltatasok.html">Szolgáltatások</a>
+      <a href="eszkozok.html">Eszközök</a>
+      <a href="rolam.html">Rólam</a>
+      <a href="kapcsolat.html">Kapcsolat</a>
+    </div>
+    <div class="footer-col">
+      <h4>Eszközök</h4>
+      <a href="eszkozok.html">🔵 TP-Link</a>
+      <a href="eszkozok.html">🟢 Ubiquiti UniFi</a>
+      <a href="eszkozok.html">🔴 MikroTik</a>
+    </div>
+    <div class="footer-col">
+      <h4>Elérhetőség</h4>
+      <a href="tel:+36309654445">+36 30 965 4445</a>
+      <a href="mailto:mail.torokpeter@gmail.com">mail.torokpeter@gmail.com</a>
+      <a>Bács-Kiskun Vármegye</a>
+      <a>H–P: 8:00–18:00</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 NetKapocs – Minden jog fenntartva</span>
+    <span>Otthoni hálózat kiépítési specialista</span>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  const nav = document.getElementById('navLinks');
+  const btn = document.getElementById('hamburger');
+  nav.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  const nav = document.getElementById('navLinks');
+  const btn = document.getElementById('hamburger');
+  if (!nav.contains(e.target) && !btn.contains(e.target)) {
+    nav.classList.remove('open');
+    btn.classList.remove('open');
+  }
+});
+</script>
+</body>
+</html>

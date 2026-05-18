@@ -6,1118 +6,359 @@
 <title>NetKapocs – Otthoni hálózat kiépítése</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --navy: #1A2744;
-  --navy-light: #243354;
-  --blue: #0E8FE0;
-  --blue-light: #38B6FF;
-  --blue-pale: #EBF5FD;
-  --gray-50: #F8FAFC;
-  --gray-100: #F1F5F9;
-  --gray-200: #E2E8F0;
-  --gray-400: #94A3B8;
-  --gray-600: #475569;
-  --gray-800: #1E293B;
-  --white: #FFFFFF;
-  --green: #10B981;
-  --orange: #F59E0B;
-  --radius: 12px;
-  --radius-sm: 8px;
-  --shadow: 0 4px 24px rgba(26,39,68,0.08);
-  --shadow-card: 0 2px 12px rgba(26,39,68,0.06);
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--gray-50);
-  color: var(--gray-800);
-  line-height: 1.65;
-  font-size: 16px;
-}
-
-h1, h2, h3, h4, h5 {
-  font-family: 'Outfit', sans-serif;
-  line-height: 1.2;
-  color: var(--navy);
-}
-
-/* ---- NAVBAR ---- */
-nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(255,255,255,0.96);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--gray-200);
-  padding: 0 2rem;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.logo {
-  font-family: 'Outfit', sans-serif;
-  font-weight: 800;
-  font-size: 1.3rem;
-  color: var(--navy);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
-}
-
-.logo-icon {
-  width: 32px; height: 32px;
-  background: var(--navy);
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-}
-
-.logo-icon svg { width: 17px; height: 17px; fill: none; stroke: white; stroke-width: 2; stroke-linecap: round; }
-.logo span { color: var(--blue); }
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 0.2rem;
-  list-style: none;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: var(--gray-600);
-  font-size: 0.93rem;
-  font-weight: 500;
-  padding: 0.45rem 0.85rem;
-  border-radius: var(--radius-sm);
-  transition: all 0.15s;
-  cursor: pointer;
-}
-
-.nav-links a:hover { color: var(--navy); background: var(--gray-100); }
-.nav-links a.active { color: var(--blue); background: var(--blue-pale); }
-.nav-cta { background: var(--navy) !important; color: white !important; padding: 0.45rem 1.1rem !important; border-radius: var(--radius-sm) !important; }
-.nav-cta:hover { background: var(--navy-light) !important; }
-
-.hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
-.hamburger span { display: block; width: 22px; height: 2px; background: var(--navy); margin: 5px 0; border-radius: 2px; transition: all 0.3s; }
-
-/* ---- PAGES ---- */
-.page { display: none; animation: fadeIn 0.32s ease; }
-.page.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-/* ---- BUTTONS ---- */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius-sm);
-  font-family: 'Outfit', sans-serif;
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.18s;
-  border: none;
-}
-.btn-primary { background: var(--blue); color: white; }
-.btn-primary:hover { background: #0b7cc4; transform: translateY(-1px); }
-.btn-outline { background: transparent; color: white; border: 1.5px solid rgba(255,255,255,0.35); }
-.btn-outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.6); }
-.btn-dark { background: var(--navy); color: white; }
-.btn-dark:hover { background: var(--navy-light); }
-
-/* ---- SECTION ---- */
-.section { padding: 5rem 2rem; }
-.section-inner { max-width: 1100px; margin: 0 auto; }
-.section-alt { background: white; }
-
-.section-header { text-align: center; margin-bottom: 3rem; }
-.section-tag {
-  display: inline-block;
-  background: var(--blue-pale);
-  color: var(--blue);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  padding: 4px 12px;
-  border-radius: 100px;
-  margin-bottom: 0.75rem;
-}
-.section-header h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700; margin-bottom: 0.75rem; }
-.section-header p { color: var(--gray-600); max-width: 560px; margin: 0 auto; line-height: 1.7; }
-
-/* ---- BADGES ---- */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 10px;
-  border-radius: 100px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-.badge-blue { background: var(--blue-pale); color: var(--blue); }
-.badge-green { background: #DCFCE7; color: #166534; }
-.badge-orange { background: #FEF3C7; color: #92400E; }
-.badge-navy { background: #EEF2FF; color: var(--navy); }
-
-/* ---- DETAIL LIST ---- */
-.detail-list { list-style: none; }
-.detail-list li {
-  font-size: 0.87rem;
-  color: var(--gray-600);
-  padding: 5px 0;
-  padding-left: 18px;
-  position: relative;
-  border-bottom: 1px solid var(--gray-100);
-}
-.detail-list li:last-child { border-bottom: none; }
-.detail-list li::before { content: '→'; position: absolute; left: 0; color: var(--blue); font-weight: 700; }
-
-/* ---- EXPERTISE GRID ---- */
-.expertise-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.25rem;
-}
-.expertise-card {
-  background: white;
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius);
-  padding: 1.75rem;
-  transition: all 0.2s;
-}
-.expertise-card:hover { border-color: var(--blue); box-shadow: var(--shadow-card); }
-.expertise-card p { font-size: 0.88rem; color: var(--gray-600); line-height: 1.65; margin-bottom: 1rem; }
-
-/* ---- FAQ ---- */
-.faq-list { max-width: 760px; margin: 0 auto; }
-.faq-item {
-  background: white;
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius);
-  margin-bottom: 10px;
-  overflow: hidden;
-}
-.faq-q {
-  width: 100%;
-  padding: 1.1rem 1.25rem;
-  background: none;
-  border: none;
-  text-align: left;
-  font-family: 'Outfit', sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--navy);
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
-.faq-q:hover { background: var(--gray-50); }
-.faq-icon { width: 20px; height: 20px; flex-shrink: 0; stroke: var(--blue); fill: none; stroke-width: 2.5; stroke-linecap: round; transition: transform 0.2s; }
-.faq-item.open .faq-icon { transform: rotate(45deg); }
-.faq-a {
-  display: none;
-  padding: 0 1.25rem 1.1rem;
-  color: var(--gray-600);
-  font-size: 0.9rem;
-  line-height: 1.7;
-  border-top: 1px solid var(--gray-100);
-  padding-top: 0.9rem;
-}
-.faq-item.open .faq-a { display: block; }
-
-/* ---- FORM ---- */
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
-.form-group { margin-bottom: 1rem; }
-.form-group label { display: block; font-size: 0.88rem; font-weight: 600; color: var(--gray-800); margin-bottom: 6px; }
-.form-group input,
-.form-group select,
-.form-group textarea {
-  width: 100%;
-  padding: 0.65rem 0.9rem;
-  border: 1.5px solid var(--gray-200);
-  border-radius: var(--radius-sm);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.95rem;
-  color: var(--gray-800);
-  background: var(--gray-50);
-  outline: none;
-  transition: border-color 0.15s, background 0.15s;
-}
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus { border-color: var(--blue); background: white; }
-.form-group textarea { resize: vertical; min-height: 120px; }
-.form-submit {
-  width: 100%;
-  padding: 0.85rem;
-  background: var(--navy);
-  color: white;
-  border: none;
-  border-radius: var(--radius-sm);
-  font-family: 'Outfit', sans-serif;
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.18s, transform 0.15s;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-}
-.form-submit:hover { background: var(--navy-light); transform: translateY(-1px); }
-.success-msg {
-  display: none;
-  text-align: center;
-  padding: 1.5rem;
-  background: #F0FDF4;
-  border: 1px solid #86EFAC;
-  border-radius: var(--radius);
-  margin-top: 1rem;
-}
-.success-msg h4 { color: #15803D; margin-bottom: 4px; }
-.success-msg p { color: #166534; font-size: 0.9rem; }
-
-/* ---- CTA BANNER ---- */
-.cta-banner {
-  background: var(--navy);
-  padding: 4rem 2rem;
-  text-align: center;
-}
-.cta-banner h2 { color: white; font-size: clamp(1.8rem, 3vw, 2.4rem); margin-bottom: 0.75rem; }
-.cta-banner p { color: rgba(255,255,255,0.65); max-width: 480px; margin: 0 auto 2rem; }
-
-/* ---- FOOTER ---- */
-footer {
-  background: var(--navy);
-  color: rgba(255,255,255,0.6);
-  padding: 3rem 2rem 2rem;
-}
-.footer-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 2rem;
-  margin-bottom: 2rem;
-}
-.footer-logo { color: white; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.2rem; margin-bottom: 0.75rem; }
-.footer-logo span { color: var(--blue-light); }
-.footer-desc { font-size: 0.88rem; line-height: 1.65; max-width: 280px; }
-.footer-col h4 { color: white; font-family: 'Outfit', sans-serif; font-size: 0.9rem; font-weight: 700; margin-bottom: 1rem; }
-.footer-col a { display: block; color: rgba(255,255,255,0.55); font-size: 0.87rem; text-decoration: none; margin-bottom: 7px; cursor: pointer; transition: color 0.15s; }
-.footer-col a:hover { color: white; }
-.footer-bottom {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(255,255,255,0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.82rem;
-}
-
-/* ---- AVAILABLE DOT ---- */
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-
-/* ---- RESPONSIVE ---- */
-@media (max-width: 768px) {
-  .nav-links { display: none; }
-  .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: white; border-bottom: 1px solid var(--gray-200); padding: 1rem; gap: 4px; }
-  .hamburger { display: block; }
-  nav { position: relative; }
-  .footer-inner { grid-template-columns: 1fr 1fr; }
-  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
-  .form-row { grid-template-columns: 1fr; }
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ===== NAVBAR ===== -->
+<!-- NAVBAR -->
 <nav id="mainNav">
-  <a class="logo" onclick="showPage('home')">
+  <a class="logo" href="index.html">
     <div class="logo-icon">
       <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
     </div>
-    NetKapocs
+    Net<span>Kapocs</span>
   </a>
   <ul class="nav-links" id="navLinks">
-    <li><a onclick="showPage('home')" id="nav-home" class="active">Főoldal</a></li>
-    <li><a onclick="showPage('services')" id="nav-services">Szolgáltatások</a></li>
-    <li><a onclick="showPage('devices')" id="nav-devices">Eszközök</a></li>
-    <li><a onclick="showPage('about')" id="nav-about">Rólam</a></li>
-    <li><a onclick="showPage('contact')" id="nav-contact" class="nav-cta">Kapcsolat</a></li>
+    <li><a href="index.html" class="active">Főoldal</a></li>
+    <li><a href="szolgaltatasok.html">Szolgáltatások</a></li>
+    <li><a href="eszkozok.html">Eszközök</a></li>
+    <li><a href="rolam.html">Rólam</a></li>
+    <li><a href="kapcsolat.html" class="nav-cta">Kapcsolat</a></li>
   </ul>
-  <button class="hamburger" onclick="toggleMenu()" aria-label="Menü">
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menü">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
-
-<!-- ========================================================
-     FŐOLDAL
-     ======================================================== -->
-<div class="page active" id="page-home">
-
-  <!-- HERO -->
-  <div style="background:linear-gradient(135deg,#0F3460 0%,#1A2744 60%,#0a1a35 100%);color:white;padding:5.5rem 2rem 4.5rem;position:relative;overflow:hidden">
-    <div style="position:absolute;top:-120px;right:-100px;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(14,143,224,0.18) 0%,transparent 70%);pointer-events:none"></div>
-    <div style="position:absolute;bottom:-80px;left:-80px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(56,182,255,0.1) 0%,transparent 70%);pointer-events:none"></div>
-    <div style="max-width:1100px;margin:0 auto;position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center">
-      <div>
-        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(14,143,224,0.15);border:1px solid rgba(14,143,224,0.3);color:#38B6FF;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:1.25rem">
-          📡 Otthoni WiFi & hálózat specialista
-        </div>
-        <h1 style="color:white;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:800;line-height:1.1;margin-bottom:1.15rem">
-          Stabil WiFi<br><span style="color:#38B6FF">minden szobában</span>
-        </h1>
-        <p style="color:rgba(255,255,255,0.72);font-size:1.05rem;line-height:1.75;margin-bottom:2rem;max-width:490px">
-          Elege van a gyenge jelből, lefagyó streamből vagy a „csak az előszobában fogja" problémából? Profi TP-Link, Ubiquiti és MikroTik eszközökkel megoldom – egyszer és véglegesen.
-        </p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:2rem">
-          <button class="btn btn-primary" onclick="showPage('contact')">
-            <svg width="16" height="16" viewBox="0 0 24 24" style="fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.47 19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-            Ingyenes felmérést kérek
-          </button>
-          <button class="btn btn-outline" onclick="showPage('services')">Miben segítek? →</button>
-        </div>
-        <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
-          <div style="display:flex;align-items:center;gap:7px;color:rgba(255,255,255,0.6);font-size:.85rem">
-            <span style="color:#10B981;font-size:1rem">✓</span> Helyszíni felmérés díjmentes
-          </div>
-          <div style="display:flex;align-items:center;gap:7px;color:rgba(255,255,255,0.6);font-size:.85rem">
-            <span style="color:#10B981;font-size:1rem">✓</span> 30 nap garancia
-          </div>
-          <div style="display:flex;align-items:center;gap:7px;color:rgba(255,255,255,0.6);font-size:.85rem">
-            <span style="color:#10B981;font-size:1rem">✓</span> Dokumentáció átadással
-          </div>
-        </div>
+<!-- HERO -->
+<div class="hero-section" style="background:linear-gradient(135deg,#0F3460 0%,#1A2744 60%,#0a1a35 100%);color:white;padding:5.5rem 2rem 4.5rem;position:relative;overflow:hidden">
+  <div style="position:absolute;top:-120px;right:-100px;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(14,143,224,0.18) 0%,transparent 70%);pointer-events:none"></div>
+  <div style="position:absolute;bottom:-80px;left:-80px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(56,182,255,0.1) 0%,transparent 70%);pointer-events:none"></div>
+  <div class="hero-grid" style="max-width:1100px;margin:0 auto;position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center">
+    <div class="hero-content">
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(14,143,224,0.15);border:1px solid rgba(14,143,224,0.3);color:#38B6FF;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:1.25rem">
+        📡 Otthoni WiFi &amp; hálózat specialista
       </div>
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:1rem 1.25rem;display:flex;align-items:center;gap:14px;transition:all .2s" onmouseover="this.style.background='rgba(255,255,255,0.11)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
-          <div style="width:44px;height:44px;background:rgba(14,143,224,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.35rem">📶</div>
-          <div><div style="color:white;font-weight:600;font-size:.95rem;margin-bottom:2px">Teljes WiFi lefedettség</div><div style="color:rgba(255,255,255,0.5);font-size:.82rem">Minden szobában, vastag falakon is átsugároz</div></div>
-        </div>
-        <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:1rem 1.25rem;display:flex;align-items:center;gap:14px;transition:all .2s" onmouseover="this.style.background='rgba(255,255,255,0.11)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
-          <div style="width:44px;height:44px;background:rgba(14,143,224,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.35rem">🔒</div>
-          <div><div style="color:white;font-weight:600;font-size:.95rem;margin-bottom:2px">Biztonságos szegmentálás</div><div style="color:rgba(255,255,255,0.5);font-size:.82rem">Vendég WiFi és IoT eszközök külön hálózaton</div></div>
-        </div>
-        <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:1rem 1.25rem;display:flex;align-items:center;gap:14px;transition:all .2s" onmouseover="this.style.background='rgba(255,255,255,0.11)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
-          <div style="width:44px;height:44px;background:rgba(14,143,224,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.35rem">⚡</div>
-          <div><div style="color:white;font-weight:600;font-size:.95rem;margin-bottom:2px">Gyors, stabil kapcsolat</div><div style="color:rgba(255,255,255,0.5);font-size:.82rem">4K streaming, gaming, home office laggolás nélkül</div></div>
-        </div>
-        <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:1rem 1.25rem;display:flex;align-items:center;gap:14px;transition:all .2s" onmouseover="this.style.background='rgba(255,255,255,0.11)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
-          <div style="width:44px;height:44px;background:rgba(14,143,224,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.35rem">🏠</div>
-          <div><div style="color:white;font-weight:600;font-size:.95rem;margin-bottom:2px">Okos otthon integráció</div><div style="color:rgba(255,255,255,0.5);font-size:.82rem">Smart TV, kamera, okosizzó – mind csatlakoztatva</div></div>
-        </div>
+      <h1 style="color:white;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:800;line-height:1.1;margin-bottom:1.15rem">
+        Stabil WiFi<br><span style="color:#38B6FF">minden szobában</span>
+      </h1>
+      <p style="color:rgba(255,255,255,0.72);font-size:1.05rem;line-height:1.75;margin-bottom:2rem;max-width:490px">
+        Elege van a gyenge jelből, lefagyó streamből vagy a „csak az előszobában fogja" problémából? Profi TP-Link, Ubiquiti és MikroTik eszközökkel megoldom – egyszer és véglegesen.
+      </p>
+      <div class="hero-buttons" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:2rem">
+        <a href="kapcsolat.html" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" style="fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.47 19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          Ingyenes felmérést kérek
+        </a>
+        <a href="szolgaltatasok.html" class="btn btn-outline">Miben segítek? →</a>
+      </div>
+      <div class="hero-badges" style="display:flex;gap:1.5rem;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:7px;color:rgba(255,255,255,0.6);font-size:.85rem"><span style="color:#10B981;font-size:1rem">✓</span> Helyszíni felmérés díjmentes</div>
+        <div style="display:flex;align-items:center;gap:7px;color:rgba(255,255,255,0.6);font-size:.85rem"><span style="color:#10B981;font-size:1rem">✓</span> 30 nap garancia</div>
+        <div style="display:flex;align-items:center;gap:7px;color:rgba(255,255,255,0.6);font-size:.85rem"><span style="color:#10B981;font-size:1rem">✓</span> Dokumentáció átadással</div>
+      </div>
+    </div>
+    <div class="hero-cards" style="display:flex;flex-direction:column;gap:10px">
+      <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:1rem 1.25rem;display:flex;align-items:center;gap:14px">
+        <div style="width:44px;height:44px;background:rgba(14,143,224,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.35rem">📶</div>
+        <div><div style="color:white;font-weight:600;font-size:.95rem;margin-bottom:2px">Teljes WiFi lefedettség</div><div style="color:rgba(255,255,255,0.5);font-size:.82rem">Minden szobában, vastag falakon is átsugároz</div></div>
+      </div>
+      <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:1rem 1.25rem;display:flex;align-items:center;gap:14px">
+        <div style="width:44px;height:44px;background:rgba(14,143,224,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.35rem">🔒</div>
+        <div><div style="color:white;font-weight:600;font-size:.95rem;margin-bottom:2px">Biztonságos szegmentálás</div><div style="color:rgba(255,255,255,0.5);font-size:.82rem">Vendég WiFi és IoT eszközök külön hálózaton</div></div>
+      </div>
+      <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:1rem 1.25rem;display:flex;align-items:center;gap:14px">
+        <div style="width:44px;height:44px;background:rgba(14,143,224,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.35rem">⚡</div>
+        <div><div style="color:white;font-weight:600;font-size:.95rem;margin-bottom:2px">Gyors, stabil kapcsolat</div><div style="color:rgba(255,255,255,0.5);font-size:.82rem">4K streaming, gaming, home office laggolás nélkül</div></div>
+      </div>
+      <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:1rem 1.25rem;display:flex;align-items:center;gap:14px">
+        <div style="width:44px;height:44px;background:rgba(14,143,224,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.35rem">🏠</div>
+        <div><div style="color:white;font-weight:600;font-size:.95rem;margin-bottom:2px">Okos otthon integráció</div><div style="color:rgba(255,255,255,0.5);font-size:.82rem">Smart TV, kamera, okosizzó – mind csatlakoztatva</div></div>
       </div>
     </div>
   </div>
-
-  <!-- STATS -->
-  <div style="background:white;border-bottom:1px solid var(--gray-200);padding:1.5rem 2rem">
-    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;text-align:center">
-      <div style="padding:.5rem">
-        <div style="font-family:'Outfit',sans-serif;font-size:2rem;font-weight:800;color:var(--navy);line-height:1;margin-bottom:4px">5<span style="color:var(--blue)">+</span></div>
-        <div style="font-size:.82rem;color:var(--gray-600);font-weight:500">Év tapasztalat</div>
-      </div>
-      <div style="padding:.5rem">
-        <div style="font-family:'Outfit',sans-serif;font-size:2rem;font-weight:800;color:var(--navy);line-height:1;margin-bottom:4px">100<span style="color:var(--blue)">+</span></div>
-        <div style="font-size:.82rem;color:var(--gray-600);font-weight:500">Elvégzett projekt</div>
-      </div>
-      <div style="padding:.5rem">
-        <div style="font-family:'Outfit',sans-serif;font-size:2rem;font-weight:800;color:var(--navy);line-height:1;margin-bottom:4px">3</div>
-        <div style="font-size:.82rem;color:var(--gray-600);font-weight:500">Prémium eszközmárka</div>
-      </div>
-      <div style="padding:.5rem">
-        <div style="font-family:'Outfit',sans-serif;font-size:2rem;font-weight:800;color:var(--navy);line-height:1;margin-bottom:4px">24<span style="color:var(--blue)">h</span></div>
-        <div style="font-size:.82rem;color:var(--gray-600);font-weight:500">Reagálási idő</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- BRANDS -->
-  <div style="background:var(--gray-50);padding:2.5rem 2rem;border-bottom:1px solid var(--gray-200)">
-    <div style="max-width:1100px;margin:0 auto">
-      <div style="text-align:center;font-size:.78rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--gray-400);margin-bottom:1.5rem">Általam használt, megbízható eszközök</div>
-      <div style="display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap">
-        <div style="background:white;border:1.5px solid var(--gray-200);border-radius:12px;padding:1.25rem 2.25rem;text-align:center;min-width:185px;transition:all .2s;cursor:pointer" onmouseover="this.style.borderColor='#0E8FE0';this.style.boxShadow='0 4px 16px rgba(14,143,224,0.1)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.boxShadow='none';this.style.transform='none'" onclick="showPage('devices')">
-          <div style="font-size:2.2rem;margin-bottom:7px">🔵</div>
-          <div style="font-family:'Outfit',sans-serif;font-weight:800;font-size:1.1rem;color:var(--navy)">TP-Link</div>
-          <div style="font-size:.78rem;color:var(--gray-400);margin-top:3px;margin-bottom:8px">Otthoni WiFi & mesh</div>
-          <span class="badge badge-blue" style="font-size:.7rem">Ár-érték király</span>
-        </div>
-        <div style="background:white;border:1.5px solid var(--gray-200);border-radius:12px;padding:1.25rem 2.25rem;text-align:center;min-width:185px;transition:all .2s;cursor:pointer" onmouseover="this.style.borderColor='#0E8FE0';this.style.boxShadow='0 4px 16px rgba(14,143,224,0.1)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.boxShadow='none';this.style.transform='none'" onclick="showPage('devices')">
-          <div style="font-size:2.2rem;margin-bottom:7px">🟢</div>
-          <div style="font-family:'Outfit',sans-serif;font-weight:800;font-size:1.1rem;color:var(--navy)">Ubiquiti</div>
-          <div style="font-size:.78rem;color:var(--gray-400);margin-top:3px;margin-bottom:8px">UniFi – profi WiFi rendszerek</div>
-          <span class="badge badge-green" style="font-size:.7rem">Prémium minőség</span>
-        </div>
-        <div style="background:white;border:1.5px solid var(--gray-200);border-radius:12px;padding:1.25rem 2.25rem;text-align:center;min-width:185px;transition:all .2s;cursor:pointer" onmouseover="this.style.borderColor='#0E8FE0';this.style.boxShadow='0 4px 16px rgba(14,143,224,0.1)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.boxShadow='none';this.style.transform='none'" onclick="showPage('devices')">
-          <div style="font-size:2.2rem;margin-bottom:7px">🔴</div>
-          <div style="font-family:'Outfit',sans-serif;font-weight:800;font-size:1.1rem;color:var(--navy)">MikroTik</div>
-          <div style="font-size:.78rem;color:var(--gray-400);margin-top:3px;margin-bottom:8px">RouterOS – profi vezérlés</div>
-          <span class="badge badge-orange" style="font-size:.7rem">Maximális irányítás</span>
-        </div>
-      </div>
-      <p style="text-align:center;margin-top:1rem;font-size:.84rem;color:var(--gray-600)">Az igényekhez és a költségkerethez legjobban illő eszközt ajánlom – kattintson az eszközökre a részletekért!</p>
-    </div>
-  </div>
-
-  <!-- PROBLEMS -->
-  <section class="section section-alt">
-    <div class="section-inner">
-      <div class="section-header">
-        <div class="section-tag">Ismerős?</div>
-        <h2>Ezek a problémák megoldhatók</h2>
-        <p>A leggyakoribb otthoni hálózati gondok – mindegyiket meg tudom oldani, tartósan.</p>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem">
-        <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.5rem;display:flex;gap:12px;align-items:flex-start;transition:all .2s" onmouseover="this.style.borderColor='var(--blue)';this.style.background='white'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.background='var(--gray-50)'">
-          <div style="font-size:1.7rem;flex-shrink:0">📶</div>
-          <div><h4 style="font-size:.93rem;margin-bottom:4px">„Alig van jel az egyik szobában"</h4><p style="font-size:.82rem;color:var(--gray-600);line-height:1.6">WiFi holtpontok, vastag falak – megoldom a lefedettséget mesh rendszerrel.</p></div>
-        </div>
-        <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.5rem;display:flex;gap:12px;align-items:flex-start;transition:all .2s" onmouseover="this.style.borderColor='var(--blue)';this.style.background='white'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.background='var(--gray-50)'">
-          <div style="font-size:1.7rem;flex-shrink:0">🐌</div>
-          <div><h4 style="font-size:.93rem;margin-bottom:4px">„Lassú az internet, pedig jó csomagom van"</h4><p style="font-size:.82rem;color:var(--gray-600);line-height:1.6">Rossz router, régi firmware, csatorna torlódás – diagnosztizálom és megoldom.</p></div>
-        </div>
-        <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.5rem;display:flex;gap:12px;align-items:flex-start;transition:all .2s" onmouseover="this.style.borderColor='var(--blue)';this.style.background='white'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.background='var(--gray-50)'">
-          <div style="font-size:1.7rem;flex-shrink:0">🎮</div>
-          <div><h4 style="font-size:.93rem;margin-bottom:4px">„Gaming közben lag és kilépések"</h4><p style="font-size:.82rem;color:var(--gray-600);line-height:1.6">QoS beállítás, prioritásos sávszélesség – a játék elsőbbséget kap.</p></div>
-        </div>
-        <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.5rem;display:flex;gap:12px;align-items:flex-start;transition:all .2s" onmouseover="this.style.borderColor='var(--blue)';this.style.background='white'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.background='var(--gray-50)'">
-          <div style="font-size:1.7rem;flex-shrink:0">💻</div>
-          <div><h4 style="font-size:.93rem;margin-bottom:4px">„Home office-ban lefagy a videóhívás"</h4><p style="font-size:.82rem;color:var(--gray-600);line-height:1.6">Stabil, prioritásos kapcsolat munkaeszköznek – tárgyalás és Teams laggolás nélkül.</p></div>
-        </div>
-        <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.5rem;display:flex;gap:12px;align-items:flex-start;transition:all .2s" onmouseover="this.style.borderColor='var(--blue)';this.style.background='white'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.background='var(--gray-50)'">
-          <div style="font-size:1.7rem;flex-shrink:0">📹</div>
-          <div><h4 style="font-size:.93rem;margin-bottom:4px">„A biztonsági kamera nem csatlakozik"</h4><p style="font-size:.82rem;color:var(--gray-600);line-height:1.6">IP kamerák, NVR rendszerek hálózatba kötése, biztonságos IoT szegmens.</p></div>
-        </div>
-        <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.5rem;display:flex;gap:12px;align-items:flex-start;transition:all .2s" onmouseover="this.style.borderColor='var(--blue)';this.style.background='white'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.background='var(--gray-50)'">
-          <div style="font-size:1.7rem;flex-shrink:0">🏠</div>
-          <div><h4 style="font-size:.93rem;margin-bottom:4px">„Az okos otthon eszközök nem működnek"</h4><p style="font-size:.82rem;color:var(--gray-600);line-height:1.6">Smart TV, okosizzók, Google Home, Alexa – mind csatlakoztatva és stabilan működve.</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROCESS -->
-  <section class="section">
-    <div class="section-inner">
-      <div class="section-header">
-        <div class="section-tag">Hogyan zajlik?</div>
-        <h2>Lépésről lépésre</h2>
-        <p>Átlátható folyamat – nincsenek rejtett költségek vagy meglepetések.</p>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--gray-200);border:1px solid var(--gray-200);border-radius:var(--radius);overflow:hidden">
-        <div style="background:white;padding:1.75rem 1.1rem;text-align:center">
-          <div style="width:44px;height:44px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:800;color:white;font-size:1.1rem;margin:0 auto .9rem">1</div>
-          <div style="font-size:1.5rem;margin-bottom:7px">📞</div>
-          <h4 style="font-size:.92rem;margin-bottom:4px">Kapcsolatfelvétel</h4>
-          <p style="font-size:.8rem;color:var(--gray-600)">Leírja a problémát telefonon vagy üzenetben</p>
-        </div>
-        <div style="background:white;padding:1.75rem 1.1rem;text-align:center">
-          <div style="width:44px;height:44px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:800;color:white;font-size:1.1rem;margin:0 auto .9rem">2</div>
-          <div style="font-size:1.5rem;margin-bottom:7px">🔍</div>
-          <h4 style="font-size:.92rem;margin-bottom:4px">Ingyenes felmérés</h4>
-          <p style="font-size:.8rem;color:var(--gray-600)">Helyszíni felmérés, holtpontok meghatározása</p>
-        </div>
-        <div style="background:white;padding:1.75rem 1.1rem;text-align:center">
-          <div style="width:44px;height:44px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:800;color:white;font-size:1.1rem;margin:0 auto .9rem">3</div>
-          <div style="font-size:1.5rem;margin-bottom:7px">📝</div>
-          <h4 style="font-size:.92rem;margin-bottom:4px">Írásos ajánlat</h4>
-          <p style="font-size:.8rem;color:var(--gray-600)">Részletes, átlátható árajánlat eszközzel együtt</p>
-        </div>
-        <div style="background:white;padding:1.75rem 1.1rem;text-align:center">
-          <div style="width:44px;height:44px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:800;color:white;font-size:1.1rem;margin:0 auto .9rem">4</div>
-          <div style="font-size:1.5rem;margin-bottom:7px">🔧</div>
-          <h4 style="font-size:.92rem;margin-bottom:4px">Telepítés</h4>
-          <p style="font-size:.8rem;color:var(--gray-600)">Gyors, precíz kivitelezés és konfiguráció</p>
-        </div>
-        <div style="background:white;padding:1.75rem 1.1rem;text-align:center">
-          <div style="width:44px;height:44px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:800;color:white;font-size:1.1rem;margin:0 auto .9rem">5</div>
-          <div style="font-size:1.5rem;margin-bottom:7px">✅</div>
-          <h4 style="font-size:.92rem;margin-bottom:4px">Átadás & garancia</h4>
-          <p style="font-size:.8rem;color:var(--gray-600)">Dokumentáció, betanítás, 30 nap garancia</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="cta-banner">
-    <h2>Jobb WiFi-t szeretne?</h2>
-    <p>Ingyenes helyszíni felmérés, írásos ajánlat – kötelezettség nélkül. Bács-Kiskun Vármegye és körzetében.</p>
-    <button class="btn btn-primary" onclick="showPage('contact')">Ingyenes felmérést kérek →</button>
-  </div>
-
 </div>
 
-
-<!-- ========================================================
-     SZOLGÁLTATÁSOK
-     ======================================================== -->
-<div class="page" id="page-services">
-
-  <div style="background:var(--navy);color:white;padding:4rem 2rem 3rem">
-    <div style="max-width:1100px;margin:0 auto">
-      <div class="section-tag" style="margin-bottom:.8rem">Részletes szolgáltatások</div>
-      <h1 style="color:white;font-size:clamp(2rem,4vw,2.8rem);font-weight:800;margin-bottom:.9rem">Mit tartalmaz az otthoni<br>hálózat kiépítése?</h1>
-      <p style="color:rgba(255,255,255,0.7);max-width:580px;font-size:1.02rem;line-height:1.75">Nem csak egy routert cserélek – teljes, átgondolt hálózatot tervezek és kivitelezek, a felmérésből az átadásig.</p>
+<!-- STATS -->
+<div class="stats-bar" style="background:white;border-bottom:1px solid var(--gray-200);padding:1.5rem 2rem">
+  <div class="stats-grid" style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;text-align:center">
+    <div style="padding:.5rem">
+      <div style="font-family:'Outfit',sans-serif;font-size:2rem;font-weight:800;color:var(--navy);line-height:1;margin-bottom:4px">5<span style="color:var(--blue)">+</span></div>
+      <div style="font-size:.82rem;color:var(--gray-600);font-weight:500">Év tapasztalat</div>
+    </div>
+    <div style="padding:.5rem">
+      <div style="font-family:'Outfit',sans-serif;font-size:2rem;font-weight:800;color:var(--navy);line-height:1;margin-bottom:4px">100<span style="color:var(--blue)">+</span></div>
+      <div style="font-size:.82rem;color:var(--gray-600);font-weight:500">Elvégzett projekt</div>
+    </div>
+    <div style="padding:.5rem">
+      <div style="font-family:'Outfit',sans-serif;font-size:2rem;font-weight:800;color:var(--navy);line-height:1;margin-bottom:4px">3</div>
+      <div style="font-size:.82rem;color:var(--gray-600);font-weight:500">Prémium eszközmárka</div>
+    </div>
+    <div style="padding:.5rem">
+      <div style="font-family:'Outfit',sans-serif;font-size:2rem;font-weight:800;color:var(--navy);line-height:1;margin-bottom:4px">24<span style="color:var(--blue)">h</span></div>
+      <div style="font-size:.82rem;color:var(--gray-600);font-weight:500">Reagálási idő</div>
     </div>
   </div>
-
-  <section class="section section-alt">
-    <div class="section-inner">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
-        <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.75rem">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem">
-            <div style="width:42px;height:42px;background:var(--blue-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0">🔍</div>
-            <h3 style="font-size:1.05rem">Helyszíni felmérés</h3>
-          </div>
-          <ul class="detail-list">
-            <li>WiFi lefedettség mérése (holtpontok meghatározása)</li>
-            <li>Épület alaprajz és falszerkezet elemzése</li>
-            <li>Meglévő eszközök és kábelezés átvizsgálása</li>
-            <li>Internet sebesség mérés és diagnosztika</li>
-            <li>Igények és elvárások egyeztetése</li>
-          </ul>
-          <div style="margin-top:1rem;background:#F0FDF4;border:1px solid #86EFAC;border-radius:8px;padding:.75rem 1rem;font-size:.84rem;color:#166534;font-weight:600">✅ Ez a lépés ingyenes!</div>
-        </div>
-
-        <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.75rem">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem">
-            <div style="width:42px;height:42px;background:var(--blue-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0">📐</div>
-            <h3 style="font-size:1.05rem">Hálózattervezés & ajánlat</h3>
-          </div>
-          <ul class="detail-list">
-            <li>Eszközök optimális elhelyezésének megtervezése</li>
-            <li>IP cím séma kialakítása</li>
-            <li>Hálózati szegmentálás (főhálózat, vendég, IoT)</li>
-            <li>Eszköz kiválasztás igény és budget szerint</li>
-            <li>Részletes, írásos ajánlat – eszközök ára külön!</li>
-          </ul>
-        </div>
-
-        <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.75rem">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem">
-            <div style="width:42px;height:42px;background:var(--blue-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0">🔧</div>
-            <h3 style="font-size:1.05rem">Telepítés & konfigurálás</h3>
-          </div>
-          <ul class="detail-list">
-            <li>Router és access pointok telepítése, bekötése</li>
-            <li>TP-Link / Ubiquiti UniFi / MikroTik konfiguráció</li>
-            <li>Mesh rendszer kialakítása (ha szükséges)</li>
-            <li>Vendég WiFi és IoT szegmens beállítása</li>
-            <li>Összes eszköz (laptop, TV, kamera) csatlakoztatása</li>
-          </ul>
-        </div>
-
-        <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.75rem">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem">
-            <div style="width:42px;height:42px;background:var(--blue-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0">📋</div>
-            <h3 style="font-size:1.05rem">Átadás & garancia</h3>
-          </div>
-          <ul class="detail-list">
-            <li>Hálózati dokumentáció átadása (jelszavak, IP-k, eszközök)</li>
-            <li>Rövid betanítás – hogyan kezelje az eszközöket</li>
-            <li>Sebességtesztek minden szobában</li>
-            <li>30 napos garancia az elvégzett munkára</li>
-            <li>Utólagos kérdések megválaszolása ingyenesen</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EXTRA SERVICES -->
-  <section class="section">
-    <div class="section-inner">
-      <div class="section-header">
-        <div class="section-tag">Egyéb megoldások</div>
-        <h2>Amit még elvégzek</h2>
-        <p>A hálózat kiépítésén túl ezeket a feladatokat is elvállalom.</p>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.1rem">
-        <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.4rem;text-align:center;transition:all .2s" onmouseover="this.style.borderColor='var(--blue)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.transform='none'">
-          <div style="font-size:1.8rem;margin-bottom:8px">🔌</div>
-          <h4 style="font-size:.95rem;margin-bottom:5px">Hálózati kábelezés</h4>
-          <p style="font-size:.82rem;color:var(--gray-600)">Cat5e/Cat6 UTP kábel fektetése, fali aljzatok szerelése</p>
-        </div>
-        <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.4rem;text-align:center;transition:all .2s" onmouseover="this.style.borderColor='var(--blue)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.transform='none'">
-          <div style="font-size:1.8rem;margin-bottom:8px">📹</div>
-          <h4 style="font-size:.95rem;margin-bottom:5px">IP kamera rendszer</h4>
-          <p style="font-size:.82rem;color:var(--gray-600)">Biztonsági kamerák hálózatba kötése, NVR beállítás</p>
-        </div>
-        <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.4rem;text-align:center;transition:all .2s" onmouseover="this.style.borderColor='var(--blue)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.transform='none'">
-          <div style="font-size:1.8rem;margin-bottom:8px">💾</div>
-          <h4 style="font-size:.95rem;margin-bottom:5px">NAS tárhely beállítás</h4>
-          <p style="font-size:.82rem;color:var(--gray-600)">Hálózati meghajtó (NAS) telepítése és beállítása</p>
-        </div>
-        <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.4rem;text-align:center;transition:all .2s" onmouseover="this.style.borderColor='var(--blue)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.transform='none'">
-          <div style="font-size:1.8rem;margin-bottom:8px">📺</div>
-          <h4 style="font-size:.95rem;margin-bottom:5px">Smart TV & streaming</h4>
-          <p style="font-size:.82rem;color:var(--gray-600)">Smart TV, Apple TV, Chromecast beállítása</p>
-        </div>
-        <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.4rem;text-align:center;transition:all .2s" onmouseover="this.style.borderColor='var(--blue)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.transform='none'">
-          <div style="font-size:1.8rem;margin-bottom:8px">🏠</div>
-          <h4 style="font-size:.95rem;margin-bottom:5px">Smart Home integráció</h4>
-          <p style="font-size:.82rem;color:var(--gray-600)">Google Home, Alexa, Zigbee eszközök hálózatba kötése</p>
-        </div>
-        <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.4rem;text-align:center;transition:all .2s" onmouseover="this.style.borderColor='var(--blue)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.transform='none'">
-          <div style="font-size:1.8rem;margin-bottom:8px">🔒</div>
-          <h4 style="font-size:.95rem;margin-bottom:5px">Hálózatbiztonság</h4>
-          <p style="font-size:.82rem;color:var(--gray-600)">Tűzfal, vendég WiFi, szülői felügyelet beállítása</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="cta-banner">
-    <h2>Kérdése van? Szívesen segítek!</h2>
-    <p>Ingyenes konzultáció – elmondja az igényét, én megoldom.</p>
-    <button class="btn btn-primary" onclick="showPage('contact')">Kapcsolatfelvétel →</button>
-  </div>
-
 </div>
 
-
-<!-- ========================================================
-     ESZKÖZÖK
-     ======================================================== -->
-<div class="page" id="page-devices">
-
-  <div style="background:var(--navy);color:white;padding:4rem 2rem 3rem">
-    <div style="max-width:1100px;margin:0 auto">
-      <div class="section-tag" style="margin-bottom:.8rem">Eszközök & márkák</div>
-      <h1 style="color:white;font-size:clamp(2rem,4vw,2.8rem);font-weight:800;margin-bottom:.9rem">Melyik megoldás az Önnek való?</h1>
-      <p style="color:rgba(255,255,255,0.7);max-width:580px;font-size:1.02rem;line-height:1.75">Három megbízható márkával dolgozom – mindig az igényekhez és a költségkerethez leginkább illő eszközt ajánlom.</p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:1.5rem">
-        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;font-size:.84rem;font-weight:600;padding:6px 14px;border-radius:100px">
-          <span style="width:8px;height:8px;background:#10B981;border-radius:50%;display:inline-block"></span>TP-Link – Ár-érték
-        </div>
-        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;font-size:.84rem;font-weight:600;padding:6px 14px;border-radius:100px">
-          <span style="width:8px;height:8px;background:#10B981;border-radius:50%;display:inline-block"></span>Ubiquiti – Prémium
-        </div>
-        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;font-size:.84rem;font-weight:600;padding:6px 14px;border-radius:100px">
-          <span style="width:8px;height:8px;background:#10B981;border-radius:50%;display:inline-block"></span>MikroTik – Profi
-        </div>
-      </div>
+<!-- BRANDS -->
+<div style="background:var(--gray-50);padding:2.5rem 2rem;border-bottom:1px solid var(--gray-200)">
+  <div style="max-width:1100px;margin:0 auto">
+    <div style="text-align:center;font-size:.78rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--gray-400);margin-bottom:1.5rem">Általam használt, megbízható eszközök</div>
+    <div class="brands-flex" style="display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap">
+      <a href="eszkozok.html" class="brand-card" style="background:white;border:1.5px solid var(--gray-200);border-radius:12px;padding:1.25rem 2.25rem;text-align:center;min-width:185px;transition:all .2s;cursor:pointer;text-decoration:none;display:block">
+        <div style="font-size:2.2rem;margin-bottom:7px">🔵</div>
+        <div style="font-family:'Outfit',sans-serif;font-weight:800;font-size:1.1rem;color:var(--navy)">TP-Link</div>
+        <div style="font-size:.78rem;color:var(--gray-400);margin-top:3px;margin-bottom:8px">Otthoni WiFi &amp; mesh</div>
+        <span class="badge badge-blue" style="font-size:.7rem">Ár-érték király</span>
+      </a>
+      <a href="eszkozok.html" class="brand-card" style="background:white;border:1.5px solid var(--gray-200);border-radius:12px;padding:1.25rem 2.25rem;text-align:center;min-width:185px;transition:all .2s;cursor:pointer;text-decoration:none;display:block">
+        <div style="font-size:2.2rem;margin-bottom:7px">🟢</div>
+        <div style="font-family:'Outfit',sans-serif;font-weight:800;font-size:1.1rem;color:var(--navy)">Ubiquiti</div>
+        <div style="font-size:.78rem;color:var(--gray-400);margin-top:3px;margin-bottom:8px">UniFi – profi WiFi rendszerek</div>
+        <span class="badge badge-green" style="font-size:.7rem">Prémium minőség</span>
+      </a>
+      <a href="eszkozok.html" class="brand-card" style="background:white;border:1.5px solid var(--gray-200);border-radius:12px;padding:1.25rem 2.25rem;text-align:center;min-width:185px;transition:all .2s;cursor:pointer;text-decoration:none;display:block">
+        <div style="font-size:2.2rem;margin-bottom:7px">🔴</div>
+        <div style="font-family:'Outfit',sans-serif;font-weight:800;font-size:1.1rem;color:var(--navy)">MikroTik</div>
+        <div style="font-size:.78rem;color:var(--gray-400);margin-top:3px;margin-bottom:8px">RouterOS – profi vezérlés</div>
+        <span class="badge badge-orange" style="font-size:.7rem">Maximális irányítás</span>
+      </a>
     </div>
+    <p style="text-align:center;margin-top:1rem;font-size:.84rem;color:var(--gray-600)">Az igényekhez és a költségkerethez legjobban illő eszközt ajánlom – kattintson a részletekért!</p>
   </div>
-
-  <section class="section section-alt">
-    <div class="section-inner">
-      <div class="expertise-grid">
-
-        <!-- TP-LINK -->
-        <div style="background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:2rem;transition:all .2s" onmouseover="this.style.borderColor='#0E8FE0';this.style.boxShadow='var(--shadow)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.boxShadow='none'">
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem">
-            <div style="font-size:2.2rem">🔵</div>
-            <div>
-              <h3 style="font-size:1.2rem;margin-bottom:3px">TP-Link</h3>
-              <span class="badge badge-blue">Ár-érték király</span>
-            </div>
-          </div>
-          <p style="font-size:.88rem;color:var(--gray-600);line-height:1.65;margin-bottom:1.25rem">Kiváló választás kisebb-közepes otthonokhoz, ahol a megbízhatóság és az egyszerű kezelhetőség a prioritás. A Deco mesh rendszer különösen ajánlott nagyobb alapterületű házakhoz.</p>
-          <h4 style="font-size:.9rem;margin-bottom:.6rem;color:var(--navy)">Általam telepített modellek:</h4>
-          <ul class="detail-list">
-            <li><strong>TP-Link Deco</strong> – mesh WiFi, egyszerű mobilapp-os kezelés</li>
-            <li><strong>Archer sorozat</strong> – erős, megbízható router középkategóriában</li>
-            <li>WiFi 6 (802.11ax) támogatás – gyorsabb, több eszköz egyszerre</li>
-          </ul>
-          <div style="margin-top:1.25rem;background:var(--blue-pale);border-radius:8px;padding:.9rem 1rem;font-size:.84rem;color:var(--navy)">
-            <strong>Kinek ajánlom:</strong> 1–3 szobás lakás, kisebb ház, aki egyszerű kezelést szeretne megfizethetőbb áron.
-          </div>
-        </div>
-
-        <!-- UBIQUITI -->
-        <div style="background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:2rem;transition:all .2s" onmouseover="this.style.borderColor='#0E8FE0';this.style.boxShadow='var(--shadow)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.boxShadow='none'">
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem">
-            <div style="font-size:2.2rem">🟢</div>
-            <div>
-              <h3 style="font-size:1.2rem;margin-bottom:3px">Ubiquiti UniFi</h3>
-              <span class="badge badge-green">Prémium minőség</span>
-            </div>
-          </div>
-          <p style="font-size:.88rem;color:var(--gray-600);line-height:1.65;margin-bottom:1.25rem">Professzionális szintű hálózati megoldás – amit sok vállalkozás is alkalmaz, de otthoni környezetben is tökéletesen működik. Kiváló lefedettség, részletes monitoring, stabil kapcsolat.</p>
-          <h4 style="font-size:.9rem;margin-bottom:.6rem;color:var(--navy)">Általam telepített modellek:</h4>
-          <ul class="detail-list">
-            <li><strong>UniFi Access Point</strong> – ipari szintű WiFi erősítő, mennyezetre is szerelhető</li>
-            <li><strong>UniFi Dream Machine</strong> – all-in-one router + controller + tűzfal</li>
-            <li>Centralizált webes kezelőfelület – minden eszköz egy helyen</li>
-          </ul>
-          <div style="margin-top:1.25rem;background:#DCFCE7;border-radius:8px;padding:.9rem 1rem;font-size:.84rem;color:#166534">
-            <strong>Kinek ajánlom:</strong> Nagy ház, több szint, sok eszköz – aki a legjobb minőséget szeretné.
-          </div>
-        </div>
-
-        <!-- MIKROTIK -->
-        <div style="background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:2rem;transition:all .2s" onmouseover="this.style.borderColor='#0E8FE0';this.style.boxShadow='var(--shadow)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.boxShadow='none'">
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem">
-            <div style="font-size:2.2rem">🔴</div>
-            <div>
-              <h3 style="font-size:1.2rem;margin-bottom:3px">MikroTik</h3>
-              <span class="badge badge-orange">Maximális irányítás</span>
-            </div>
-          </div>
-          <p style="font-size:.88rem;color:var(--gray-600);line-height:1.65;margin-bottom:1.25rem">A hálózati szakemberek kedvence – teljes kontrollt ad a hálózat felett. Tűzfal, QoS, VPN, VLAN – minden beállítható. Komplex konfigurációt igényel, de én elvégzem Ön helyett.</p>
-          <h4 style="font-size:.9rem;margin-bottom:.6rem;color:var(--navy)">Általam telepített modellek:</h4>
-          <ul class="detail-list">
-            <li><strong>hAP sorozat</strong> – kompakt, erős home router</li>
-            <li><strong>RouterOS</strong> – profi szintű konfiguráció, tűzfal, QoS</li>
-            <li>VPN, VLAN, sávszélesség-kezelés teljes körűen</li>
-          </ul>
-          <div style="margin-top:1.25rem;background:#FEF3C7;border-radius:8px;padding:.9rem 1rem;font-size:.84rem;color:#92400E">
-            <strong>Kinek ajánlom:</strong> Tech-tudatos felhasználók, home office, NAS-szal rendelkezők, akik teljes kontrollt akarnak.
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- COMPARISON TABLE -->
-  <section class="section">
-    <div class="section-inner">
-      <div class="section-header">
-        <div class="section-tag">Összehasonlítás</div>
-        <h2>Egymás mellett</h2>
-        <p>Egy táblázatban a három eszköz legfontosabb jellemzői.</p>
-      </div>
-      <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);overflow:hidden">
-        <table style="width:100%;border-collapse:collapse;font-size:.88rem">
-          <thead>
-            <tr style="background:var(--navy);color:white">
-              <th style="padding:1rem 1.25rem;text-align:left;font-family:'Outfit',sans-serif">Szempont</th>
-              <th style="padding:1rem 1.25rem;text-align:center;font-family:'Outfit',sans-serif">🔵 TP-Link</th>
-              <th style="padding:1rem 1.25rem;text-align:center;font-family:'Outfit',sans-serif">🟢 Ubiquiti</th>
-              <th style="padding:1rem 1.25rem;text-align:center;font-family:'Outfit',sans-serif">🔴 MikroTik</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="border-bottom:1px solid var(--gray-100)">
-              <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">Ár kategória</td>
-              <td style="padding:.9rem 1.25rem;text-align:center;color:var(--gray-600)">Közepes</td>
-              <td style="padding:.9rem 1.25rem;text-align:center;color:var(--gray-600)">Magas</td>
-              <td style="padding:.9rem 1.25rem;text-align:center;color:var(--gray-600)">Közepes</td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--gray-100);background:var(--gray-50)">
-              <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">Kezelhetőség</td>
-              <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐⭐⭐⭐</td>
-              <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐⭐⭐</td>
-              <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐</td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--gray-100)">
-              <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">WiFi lefedettség</td>
-              <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐⭐⭐</td>
-              <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐⭐⭐⭐</td>
-              <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐⭐⭐</td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--gray-100);background:var(--gray-50)">
-              <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">Tűzfal / VPN</td>
-              <td style="padding:.9rem 1.25rem;text-align:center;color:var(--gray-400)">Alapszintű</td>
-              <td style="padding:.9rem 1.25rem;text-align:center;color:var(--green)">Igen ✓</td>
-              <td style="padding:.9rem 1.25rem;text-align:center;color:var(--green)">Teljes körű ✓</td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--gray-100)">
-              <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">Mesh rendszer</td>
-              <td style="padding:.9rem 1.25rem;text-align:center;color:var(--green)">Deco ✓</td>
-              <td style="padding:.9rem 1.25rem;text-align:center;color:var(--green)">UniFi ✓</td>
-              <td style="padding:.9rem 1.25rem;text-align:center;color:var(--green)">CAPsMAN ✓</td>
-            </tr>
-            <tr style="background:var(--gray-50)">
-              <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">Ajánlott esetben</td>
-              <td style="padding:.9rem 1.25rem;text-align:center;font-size:.82rem;color:var(--gray-600)">Kisebb lakás, egyszerű igény</td>
-              <td style="padding:.9rem 1.25rem;text-align:center;font-size:.82rem;color:var(--gray-600)">Nagy ház, igényes user</td>
-              <td style="padding:.9rem 1.25rem;text-align:center;font-size:.82rem;color:var(--gray-600)">Tech-tudatos, home office</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p style="text-align:center;margin-top:1rem;font-size:.84rem;color:var(--gray-600)">Nem biztos melyik a megfelelő? A helyszíni felmérés után én javaslom a legjobb megoldást – ingyenesen.</p>
-    </div>
-  </section>
-
-  <div class="cta-banner">
-    <h2>Segítek megtalálni a legjobb megoldást!</h2>
-    <p>Ingyenes felmérés után pontos ajánlatot adok – melyik eszköz, hová, mennyiért.</p>
-    <button class="btn btn-primary" onclick="showPage('contact')">Ingyenes felmérést kérek →</button>
-  </div>
-
 </div>
 
-
-<!-- ========================================================
-     RÓLAM
-     ======================================================== -->
-<div class="page" id="page-about">
-
-  <div style="background:var(--gray-50);padding:4rem 2rem 3rem;border-bottom:1px solid var(--gray-200)">
-    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:3rem;align-items:start">
-      <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
-        <div style="width:160px;height:160px;background:var(--navy);border-radius:20px;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-size:3.5rem;font-weight:800;color:var(--blue-light)">NP</div>
-        <div style="display:inline-flex;align-items:center;gap:6px;background:#DCFCE7;color:#166534;font-size:.8rem;font-weight:600;padding:4px 12px;border-radius:100px">
-          <span style="width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;display:inline-block"></span>Elérhető
-        </div>
+<!-- PROBLEMS -->
+<section class="section section-alt">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">Ismerős?</div>
+      <h2>Ezek a problémák megoldhatók</h2>
+      <p>A leggyakoribb otthoni hálózati gondok – mindegyiket meg tudom oldani, tartósan.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem">
+      <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.5rem;display:flex;gap:12px;align-items:flex-start">
+        <div style="font-size:1.7rem;flex-shrink:0">📶</div>
+        <div><h4 style="font-size:.93rem;margin-bottom:4px">„Alig van jel az egyik szobában"</h4><p style="font-size:.82rem;color:var(--gray-600);line-height:1.6">WiFi holtpontok, vastag falak – megoldom a lefedettséget mesh rendszerrel.</p></div>
       </div>
-      <div>
-        <h1 style="font-size:2.2rem;font-weight:800;margin-bottom:.4rem">NetKapocs Szakember</h1>
-        <div style="color:var(--blue);font-weight:600;font-size:1.05rem;margin-bottom:1rem">Otthoni hálózat kiépítési specialista</div>
-        <p style="color:var(--gray-600);line-height:1.75;max-width:640px">Bács-Kiskun Vármegyében és körzetében nyújtok otthoni hálózat kiépítési és fejlesztési szolgáltatásokat. Fő szakterületem a WiFi rendszerek tervezése és telepítése – TP-Link, Ubiquiti UniFi és MikroTik eszközökkel egyaránt profi szinten dolgozom. Célom, hogy minden ügyfél otthonában stabil, gyors és biztonságos legyen az internet kapcsolat.</p>
+      <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.5rem;display:flex;gap:12px;align-items:flex-start">
+        <div style="font-size:1.7rem;flex-shrink:0">🐌</div>
+        <div><h4 style="font-size:.93rem;margin-bottom:4px">„Lassú az internet, pedig jó csomagom van"</h4><p style="font-size:.82rem;color:var(--gray-600);line-height:1.6">Rossz router, régi firmware, csatorna torlódás – diagnosztizálom és megoldom.</p></div>
+      </div>
+      <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.5rem;display:flex;gap:12px;align-items:flex-start">
+        <div style="font-size:1.7rem;flex-shrink:0">🎮</div>
+        <div><h4 style="font-size:.93rem;margin-bottom:4px">„Gaming közben lag és kilépések"</h4><p style="font-size:.82rem;color:var(--gray-600);line-height:1.6">QoS beállítás, prioritásos sávszélesség – a játék elsőbbséget kap.</p></div>
+      </div>
+      <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.5rem;display:flex;gap:12px;align-items:flex-start">
+        <div style="font-size:1.7rem;flex-shrink:0">💻</div>
+        <div><h4 style="font-size:.93rem;margin-bottom:4px">„Home office-ban lefagy a videóhívás"</h4><p style="font-size:.82rem;color:var(--gray-600);line-height:1.6">Stabil, prioritásos kapcsolat munkaeszköznek – Teams laggolás nélkül.</p></div>
+      </div>
+      <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.5rem;display:flex;gap:12px;align-items:flex-start">
+        <div style="font-size:1.7rem;flex-shrink:0">📹</div>
+        <div><h4 style="font-size:.93rem;margin-bottom:4px">„A biztonsági kamera nem csatlakozik"</h4><p style="font-size:.82rem;color:var(--gray-600);line-height:1.6">IP kamerák, NVR rendszerek hálózatba kötése, biztonságos IoT szegmens.</p></div>
+      </div>
+      <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.5rem;display:flex;gap:12px;align-items:flex-start">
+        <div style="font-size:1.7rem;flex-shrink:0">🏠</div>
+        <div><h4 style="font-size:.93rem;margin-bottom:4px">„Az okos otthon eszközök nem működnek"</h4><p style="font-size:.82rem;color:var(--gray-600);line-height:1.6">Smart TV, okosizzók, Google Home, Alexa – mind csatlakoztatva és stabilan.</p></div>
       </div>
     </div>
   </div>
+</section>
 
-  <section class="section">
-    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
-      <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.5rem">
-        <h3 style="font-size:1rem;font-weight:700;margin-bottom:1.1rem;display:flex;align-items:center;gap:8px">
-          <svg width="18" height="18" viewBox="0 0 24 24" style="stroke:var(--blue);fill:none;stroke-width:2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/></svg>
-          WiFi & hálózati eszközök
-        </h3>
-        <div style="margin-bottom:14px">
-          <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:.9rem;font-weight:500">TP-Link (Deco, Archer)</span><span style="font-size:.8rem;color:var(--gray-400)">Profi</span></div>
-          <div style="height:6px;background:var(--gray-100);border-radius:3px"><div style="height:100%;width:95%;background:linear-gradient(90deg,var(--blue),var(--navy));border-radius:3px"></div></div>
-        </div>
-        <div style="margin-bottom:14px">
-          <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:.9rem;font-weight:500">Ubiquiti UniFi</span><span style="font-size:.8rem;color:var(--gray-400)">Profi</span></div>
-          <div style="height:6px;background:var(--gray-100);border-radius:3px"><div style="height:100%;width:92%;background:linear-gradient(90deg,var(--blue),var(--navy));border-radius:3px"></div></div>
-        </div>
-        <div style="margin-bottom:14px">
-          <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:.9rem;font-weight:500">MikroTik RouterOS</span><span style="font-size:.8rem;color:var(--gray-400)">Profi</span></div>
-          <div style="height:6px;background:var(--gray-100);border-radius:3px"><div style="height:100%;width:95%;background:linear-gradient(90deg,var(--blue),var(--navy));border-radius:3px"></div></div>
-        </div>
-        <div style="margin-bottom:0">
-          <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:.9rem;font-weight:500">VLAN, VPN, Tűzfal</span><span style="font-size:.8rem;color:var(--gray-400)">Haladó</span></div>
-          <div style="height:6px;background:var(--gray-100);border-radius:3px"><div style="height:100%;width:85%;background:var(--blue);border-radius:3px"></div></div>
-        </div>
+<!-- PROCESS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">Hogyan zajlik?</div>
+      <h2>Lépésről lépésre</h2>
+      <p>Átlátható folyamat – nincsenek rejtett költségek vagy meglepetések.</p>
+    </div>
+    <div class="process-steps" style="display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--gray-200);border:1px solid var(--gray-200);border-radius:var(--radius);overflow:hidden">
+      <div style="background:white;padding:1.75rem 1.1rem;text-align:center">
+        <div style="width:44px;height:44px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:800;color:white;font-size:1.1rem;margin:0 auto .9rem">1</div>
+        <div style="font-size:1.5rem;margin-bottom:7px">📞</div>
+        <h4 style="font-size:.92rem;margin-bottom:4px">Kapcsolatfelvétel</h4>
+        <p style="font-size:.8rem;color:var(--gray-600)">Leírja a problémát telefonon vagy üzenetben</p>
       </div>
-
-      <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.5rem">
-        <h3 style="font-size:1rem;font-weight:700;margin-bottom:1.1rem;display:flex;align-items:center;gap:8px">
-          <svg width="18" height="18" viewBox="0 0 24 24" style="stroke:var(--blue);fill:none;stroke-width:2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-          Szakmai erősségek
-        </h3>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem">
-          <span class="badge badge-blue" style="padding:5px 12px;font-size:.82rem">WiFi tervezés</span>
-          <span class="badge badge-navy" style="padding:5px 12px;font-size:.82rem">Dokumentálás</span>
-          <span class="badge badge-green" style="padding:5px 12px;font-size:.82rem">Hibaelhárítás</span>
-          <span class="badge badge-orange" style="padding:5px 12px;font-size:.82rem">Precizitás</span>
-          <span class="badge badge-blue" style="padding:5px 12px;font-size:.82rem">Ügyfélközpontú</span>
-          <span class="badge badge-navy" style="padding:5px 12px;font-size:.82rem">Megbízhatóság</span>
-          <span class="badge badge-green" style="padding:5px 12px;font-size:.82rem">Rugalmasság</span>
-          <span class="badge badge-orange" style="padding:5px 12px;font-size:.82rem">Átláthatóság</span>
-        </div>
-        <div style="background:var(--blue-pale);border-radius:8px;padding:1rem 1.1rem">
-          <div style="font-family:'Outfit',sans-serif;font-weight:700;color:var(--navy);margin-bottom:.4rem;font-size:.95rem">💬 Kommunikáció</div>
-          <p style="font-size:.84rem;color:var(--gray-600);line-height:1.65">Érthetően, szakzsargon nélkül kommunikálok – nem csak megoldom a problémát, el is magyarázom mi volt a gond és hogyan kerülhető el a jövőben.</p>
-        </div>
+      <div style="background:white;padding:1.75rem 1.1rem;text-align:center">
+        <div style="width:44px;height:44px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:800;color:white;font-size:1.1rem;margin:0 auto .9rem">2</div>
+        <div style="font-size:1.5rem;margin-bottom:7px">🔍</div>
+        <h4 style="font-size:.92rem;margin-bottom:4px">Ingyenes felmérés</h4>
+        <p style="font-size:.8rem;color:var(--gray-600)">Helyszíni felmérés, holtpontok meghatározása</p>
+      </div>
+      <div style="background:white;padding:1.75rem 1.1rem;text-align:center">
+        <div style="width:44px;height:44px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:800;color:white;font-size:1.1rem;margin:0 auto .9rem">3</div>
+        <div style="font-size:1.5rem;margin-bottom:7px">📝</div>
+        <h4 style="font-size:.92rem;margin-bottom:4px">Írásos ajánlat</h4>
+        <p style="font-size:.8rem;color:var(--gray-600)">Részletes, átlátható árajánlat eszközzel együtt</p>
+      </div>
+      <div style="background:white;padding:1.75rem 1.1rem;text-align:center">
+        <div style="width:44px;height:44px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:800;color:white;font-size:1.1rem;margin:0 auto .9rem">4</div>
+        <div style="font-size:1.5rem;margin-bottom:7px">🔧</div>
+        <h4 style="font-size:.92rem;margin-bottom:4px">Telepítés</h4>
+        <p style="font-size:.8rem;color:var(--gray-600)">Gyors, precíz kivitelezés és konfiguráció</p>
+      </div>
+      <div style="background:white;padding:1.75rem 1.1rem;text-align:center">
+        <div style="width:44px;height:44px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:800;color:white;font-size:1.1rem;margin:0 auto .9rem">5</div>
+        <div style="font-size:1.5rem;margin-bottom:7px">✅</div>
+        <h4 style="font-size:.92rem;margin-bottom:4px">Átadás &amp; garancia</h4>
+        <p style="font-size:.8rem;color:var(--gray-600)">Dokumentáció, betanítás, 30 nap garancia</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="section section-alt" style="padding-top:3rem">
-    <div class="section-inner">
-      <div class="section-header">
-        <div class="section-tag">GYIK</div>
-        <h2>Gyakori kérdések</h2>
-      </div>
-      <div class="faq-list">
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            Milyen területen vállalok munkát?
-            <svg class="faq-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </button>
-          <div class="faq-a">Elsősorban Bács-Kiskun Vármegye és 30-40 km-es körzetében vállalok helyszíni munkát. Nagy projekt esetén távolabb is megyek – egyeztetés alapján.</div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            Mennyi ideig tart egy otthoni hálózat kiépítése?
-            <svg class="faq-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </button>
-          <div class="faq-a">Egy átlagos, 2–3 szobás lakás hálózatának kiépítése vagy fejlesztése általában 2–4 óra alatt elvégezhető. Nagyobb ház, több access point vagy kábelezési munka esetén ez 1 egész napot vehet igénybe. A helyszíni felmérés után pontosabb időbecslést adok.</div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            Szükséges-e a meglévő routerem lecserélése?
-            <svg class="faq-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </button>
-          <div class="faq-a">Nem feltétlenül. Először megvizsgálom a meglévő eszközt – sokszor egyszerű konfigurációs módosítással vagy egy plusz access point hozzáadásával sokat lehet javítani. Ha mégis szükséges csere, az igényeknek megfelelő eszközt javaslok.</div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            Az eszközök árát is felszámolja, vagy csak a munkadíjat?
-            <svg class="faq-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </button>
-          <div class="faq-a">Az ajánlatban külön szerepel az eszközök ára és a munkadíj – teljes átláthatósággal. Az eszközöket be tudom szerezni, de ha Ön maga vásárolja meg, akkor is elvégzem a telepítést és konfigurálást.</div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            Vállal garanciát az elvégzett munkára?
-            <svg class="faq-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </button>
-          <div class="faq-a">Igen, az elvégzett munkákra 30 napos garanciát vállalok. Ha valami nem működik megfelelően, visszajövök és javítom – ingyenesen.</div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            Hétvégén is elérhető?
-            <svg class="faq-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </button>
-          <div class="faq-a">Igen! Szombaton is vállalok munkát 9:00–14:00 között. Munkaidőn kívüli megkeresésekre is reagálok, és ha szükséges, egyedi időpontot egyeztetünk.</div>
-        </div>
-      </div>
+<!-- ===== VÉLEMÉNYEK ===== -->
+<section class="section section-alt">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">Vélemények</div>
+      <h2>Mit mondanak az ügyfeleim?</h2>
+      <p>Valódi visszajelzések elégedett ügyfelektől Bács-Kiskun Vármegyéből és környékéről.</p>
     </div>
-  </section>
+    <div class="reviews-grid">
 
-</div>
-
-
-<!-- ========================================================
-     KAPCSOLAT
-     ======================================================== -->
-<div class="page" id="page-contact">
-
-  <section class="section section-alt" style="padding-top:4rem">
-    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1.5fr;gap:3rem;align-items:start">
-      <div>
-        <div class="section-tag" style="display:inline-block;margin-bottom:.8rem">Kapcsolat</div>
-        <h2 style="font-size:1.8rem;font-weight:700;margin-bottom:.75rem">Vegye fel velem a kapcsolatot!</h2>
-        <p style="color:var(--gray-600);line-height:1.7;margin-bottom:2rem">Ingyenes konzultáció és helyszíni felmérés – írjon üzenetet vagy hívjon közvetlenül. Kötelezettség nélkül.</p>
-
-        <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:1.25rem">
-          <div style="width:42px;height:42px;background:var(--blue-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg width="20" height="20" viewBox="0 0 24 24" style="stroke:var(--blue);fill:none;stroke-width:2;stroke-linecap:round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-          </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">„Hihetetlenül gyors és precíz munka. A három szobás házunkban korábban az egyik szobában egyáltalán nem volt WiFi jel. Most minden sarokban 5 csillagos lefedettség van. Az árajánlat átlátható volt, és pontosan annyit fizettem, amennyit mondott."</p>
+        <div class="review-author">
+          <div class="review-avatar">NK</div>
           <div>
-            <div style="font-size:.88rem;color:var(--gray-400);font-weight:500;margin-bottom:2px">Telefon</div>
-            <div style="color:var(--navy);font-weight:600;font-size:.95rem">+36 30 965 4445</div>
+            <div class="review-name">Nagy Katalin</div>
+            <div class="review-location">Kecskemét</div>
+            <span class="badge badge-blue review-tag">Mesh WiFi kiépítés</span>
           </div>
-        </div>
-
-        <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:1.25rem">
-          <div style="width:42px;height:42px;background:var(--blue-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg width="20" height="20" viewBox="0 0 24 24" style="stroke:var(--blue);fill:none;stroke-width:2;stroke-linecap:round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </div>
-          <div>
-            <div style="font-size:.88rem;color:var(--gray-400);font-weight:500;margin-bottom:2px">E-mail</div>
-            <div style="color:var(--navy);font-weight:600;font-size:.95rem">mail.torokpeter@gmail.com</div>
-          </div>
-        </div>
-
-        <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:1.25rem">
-          <div style="width:42px;height:42px;background:var(--blue-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg width="20" height="20" viewBox="0 0 24 24" style="stroke:var(--blue);fill:none;stroke-width:2;stroke-linecap:round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          </div>
-          <div>
-            <div style="font-size:.88rem;color:var(--gray-400);font-weight:500;margin-bottom:2px">Helyszín</div>
-            <div style="color:var(--navy);font-weight:600;font-size:.95rem">Bács-Kiskun Vármegye és 40 km-es körzetében</div>
-          </div>
-        </div>
-
-        <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:1.5rem">
-          <div style="width:42px;height:42px;background:var(--blue-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg width="20" height="20" viewBox="0 0 24 24" style="stroke:var(--blue);fill:none;stroke-width:2;stroke-linecap:round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          </div>
-          <div>
-            <div style="font-size:.88rem;color:var(--gray-400);font-weight:500;margin-bottom:2px">Nyitvatartás</div>
-            <div style="color:var(--navy);font-weight:600;font-size:.95rem">H–P: 8:00–18:00 | Szo: 9:00–12:00</div>
-          </div>
-        </div>
-
-        <div style="background:var(--blue-pale);border:1px solid rgba(14,143,224,0.2);border-radius:var(--radius);padding:1.25rem">
-          <div style="font-weight:700;color:var(--navy);margin-bottom:4px;font-family:'Outfit',sans-serif">💬 Ingyenes konzultáció</div>
-          <div style="font-size:.88rem;color:var(--gray-600)">Minden megkeresés ingyenes – díjmentes felmérés, kötelezettség nélkül.</div>
         </div>
       </div>
-<!-- FORM
-      <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:2rem">
-        <h3 style="margin-bottom:1.5rem;font-size:1.25rem">Üzenet küldése</h3>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Neve *</label>
-            <input type="text" id="fname" placeholder="Pl. Nagy János">
-          </div>
-          <div class="form-group">
-            <label>Telefonszám</label>
-            <input type="tel" id="fphone" placeholder="+36 XX XXX XXXX">
-          </div>
-        </div>
-        <div class="form-group">
-          <label>E-mail cím *</label>
-          <input type="email" id="femail" placeholder="pelda@email.hu">
-        </div>
-        <div class="form-group">
-          <label>Mire lenne szüksége?</label>
-          <select id="fservice">
-            <option value="">— Válasszon —</option>
-            <option>Teljes hálózat kiépítése (új ház/lakás)</option>
-            <option>WiFi lefedettség fejlesztése</option>
-            <option>Router csere / optimalizálás</option>
-            <option>Mesh rendszer telepítése</option>
-            <option>IP kamera / okos otthon bekötése</option>
-            <option>NAS tárhely beállítása</option>
-            <option>Hálózati hibaelhárítás</option>
-            <option>Egyéb</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Üzenete *</label>
-          <textarea id="fmessage" placeholder="Írja le röviden a problémát vagy igényét – pl. hány szobás a lakás, milyen eszközök vannak, mi a konkrét gond. Minél több részletet ír, annál pontosabb ajánlatot tudok adni."></textarea>
-        </div>
-        <button class="form-submit" onclick="submitForm()">
-          <svg width="18" height="18" viewBox="0 0 24 24" style="stroke:white;fill:none;stroke-width:2;stroke-linecap:round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-          Üzenet küldése
-        </button>
-        <div class="success-msg" id="successMsg">
-          <h4>✅ Köszönöm az üzenetet!</h4>
-          <p>24 órán belül visszajelzek. Sürgős esetben hívjon közvetlenül!</p>
-        </div>
-      </div> -->
-    </div>
-  </section>
 
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">„Home office-ban dolgoztam, és a Teams-hívások folyton lefagytak. Péter kijött, felmérte a helyzetet, és Ubiquiti access pointokat javasolt. Azóta tökéletesen működik minden – a Zoom-hívások sem akadnak. Melegen ajánlom!"</p>
+        <div class="review-author">
+          <div class="review-avatar">BG</div>
+          <div>
+            <div class="review-name">Balogh Gergő</div>
+            <div class="review-location">Kiskunfélegyháza</div>
+            <span class="badge badge-green review-tag">Ubiquiti UniFi telepítés</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">„IP kamerarendszert és NAS tárhelyet köttettem be. Mindent megoldott: a kamerák stabilan futnak, a NAS elérhető házon belül és kívülről is. Magyarázott is közben, így most én is értem, mi működik hogyan."</p>
+        <div class="review-author">
+          <div class="review-avatar">VJ</div>
+          <div>
+            <div class="review-name">Varga József</div>
+            <div class="review-location">Kiskunhalas</div>
+            <span class="badge badge-orange review-tag">IP kamera + NAS beállítás</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">„Újépítésű házunkba teljesen új hálózatot kellett kiépíteni. Péter a felmérésre eljött, terveket készített, és a kivitelezés profi volt. Kábelezés, fali aljzatok, mesh rendszer – minden egy kézből. Köszönjük!"</p>
+        <div class="review-author">
+          <div class="review-avatar">MÉ</div>
+          <div>
+            <div class="review-name">Molnár Éva</div>
+            <div class="review-location">Baja</div>
+            <span class="badge badge-navy review-tag">Teljes hálózat kiépítés</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">„Gyerekeim online játszottak, de állandóan lag és kimaradás volt. MikroTik routert és QoS beállítást javasolt – azóta mindenki elégedett. Ráadásul vendég WiFi-t is beállított a barátoknak. Nagyon felkészült szakember."</p>
+        <div class="review-author">
+          <div class="review-avatar">SZ</div>
+          <div>
+            <div class="review-name">Szabó Zoltán</div>
+            <div class="review-location">Kalocsa</div>
+            <span class="badge badge-orange review-tag">MikroTik + QoS konfiguráció</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">„Hétvégén is elért és másnap már kint volt. A garanciaidő alatt volt egy kis probléma – visszajött és megoldotta ingyen, szó nélkül. Ilyen megbízható szakembert ritkán találni. Mindenkinek csak javasolni tudom!"</p>
+        <div class="review-author">
+          <div class="review-avatar">TM</div>
+          <div>
+            <div class="review-name">Tóth Márton</div>
+            <div class="review-location">Kiskunmajsa</div>
+            <span class="badge badge-blue review-tag">WiFi fejlesztés</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Summary bar -->
+    <div style="margin-top:2.5rem;background:var(--navy);border-radius:var(--radius);padding:1.75rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">
+      <div style="display:flex;align-items:center;gap:16px">
+        <div style="font-family:'Outfit',sans-serif;font-size:3rem;font-weight:800;color:white;line-height:1">5.0</div>
+        <div>
+          <div style="color:#F59E0B;font-size:1.3rem;letter-spacing:3px">★★★★★</div>
+          <div style="color:rgba(255,255,255,0.6);font-size:.85rem;margin-top:3px">100+ elvégzett projekt alapján</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:2rem;flex-wrap:wrap">
+        <div style="text-align:center">
+          <div style="font-family:'Outfit',sans-serif;font-size:1.5rem;font-weight:800;color:white">100%</div>
+          <div style="font-size:.8rem;color:rgba(255,255,255,0.55)">Elégedett ügyfél</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-family:'Outfit',sans-serif;font-size:1.5rem;font-weight:800;color:white">30 nap</div>
+          <div style="font-size:.8rem;color:rgba(255,255,255,0.55)">Garancia</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-family:'Outfit',sans-serif;font-size:1.5rem;font-weight:800;color:white">24h</div>
+          <div style="font-size:.8rem;color:rgba(255,255,255,0.55)">Reagálási idő</div>
+        </div>
+      </div>
+      <a href="kapcsolat.html" class="btn btn-primary">Kérek ingyenes felmérést →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <h2>Jobb WiFi-t szeretne?</h2>
+  <p>Ingyenes helyszíni felmérés, írásos ajánlat – kötelezettség nélkül. Bács-Kiskun Vármegye és körzetében.</p>
+  <a href="kapcsolat.html" class="btn btn-primary">Ingyenes felmérést kérek →</a>
 </div>
 
-
-<!-- ========================================================
-     FOOTER
-     ======================================================== -->
+<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div>
-      <div class="footer-logo">Net<span>Pro</span> IT</div>
+      <div class="footer-logo">Net<span>Kapocs</span></div>
       <div class="footer-desc">Stabil WiFi minden szobában. Profi TP-Link, Ubiquiti és MikroTik eszközökkel. Bács-Kiskun Vármegye.</div>
     </div>
     <div class="footer-col">
       <h4>Oldalak</h4>
-      <a onclick="showPage('home')">Főoldal</a>
-      <a onclick="showPage('services')">Szolgáltatások</a>
-      <a onclick="showPage('devices')">Eszközök</a>
-      <a onclick="showPage('about')">Rólam</a>
-      <a onclick="showPage('contact')">Kapcsolat</a>
+      <a href="index.html">Főoldal</a>
+      <a href="szolgaltatasok.html">Szolgáltatások</a>
+      <a href="eszkozok.html">Eszközök</a>
+      <a href="rolam.html">Rólam</a>
+      <a href="kapcsolat.html">Kapcsolat</a>
     </div>
     <div class="footer-col">
       <h4>Eszközök</h4>
-      <a onclick="showPage('devices')">🔵 TP-Link</a>
-      <a onclick="showPage('devices')">🟢 Ubiquiti UniFi</a>
-      <a onclick="showPage('devices')">🔴 MikroTik</a>
+      <a href="eszkozok.html">🔵 TP-Link</a>
+      <a href="eszkozok.html">🟢 Ubiquiti UniFi</a>
+      <a href="eszkozok.html">🔴 MikroTik</a>
     </div>
     <div class="footer-col">
       <h4>Elérhetőség</h4>
-      <a>+36 30 965 4445</a>
-      <a>mail.torokpeter@gmail.com</a>
+      <a href="tel:+36309654445">+36 30 965 4445</a>
+      <a href="mailto:mail.torokpeter@gmail.com">mail.torokpeter@gmail.com</a>
       <a>Bács-Kiskun Vármegye</a>
       <a>H–P: 8:00–18:00</a>
     </div>
@@ -1129,43 +370,20 @@ footer {
 </footer>
 
 <script>
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
-  const navEl = document.getElementById('nav-' + id);
-  if (navEl) navEl.classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  document.getElementById('navLinks').classList.remove('open');
-}
-
 function toggleMenu() {
-  document.getElementById('navLinks').classList.toggle('open');
+  const nav = document.getElementById('navLinks');
+  const btn = document.getElementById('hamburger');
+  nav.classList.toggle('open');
+  btn.classList.toggle('open');
 }
-
-function toggleFaq(btn) {
-  const item = btn.closest('.faq-item');
-  const wasOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-  if (!wasOpen) item.classList.add('open');
-}
-
-function submitForm() {
-  const name = document.getElementById('fname').value.trim();
-  const email = document.getElementById('femail').value.trim();
-  const msg = document.getElementById('fmessage').value.trim();
-  if (!name || !email || !msg) {
-    alert('Kérem töltse ki a kötelező mezőket (Neve, E-mail, Üzenet)!');
-    return;
+document.addEventListener('click', function(e) {
+  const nav = document.getElementById('navLinks');
+  const btn = document.getElementById('hamburger');
+  if (!nav.contains(e.target) && !btn.contains(e.target)) {
+    nav.classList.remove('open');
+    btn.classList.remove('open');
   }
-  document.getElementById('successMsg').style.display = 'block';
-  document.getElementById('fname').value = '';
-  document.getElementById('femail').value = '';
-  document.getElementById('fphone').value = '';
-  document.getElementById('fservice').value = '';
-  document.getElementById('fmessage').value = '';
-  setTimeout(() => { document.getElementById('successMsg').style.display = 'none'; }, 6000);
-}
+});
 </script>
 </body>
 </html>

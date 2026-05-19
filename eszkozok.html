@@ -130,59 +130,179 @@
       <h2>Egymás mellett</h2>
       <p>Egy táblázatban a három eszköz legfontosabb jellemzői.</p>
     </div>
-    <div class="table-wrap" style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);overflow:hidden">
-      <table style="width:100%;border-collapse:collapse;font-size:.88rem;min-width:520px">
-        <thead>
-          <tr style="background:var(--navy);color:white">
-            <th style="padding:1rem 1.25rem;text-align:left;font-family:'Outfit',sans-serif">Szempont</th>
-            <th style="padding:1rem 1.25rem;text-align:center;font-family:'Outfit',sans-serif">🔵 TP-Link</th>
-            <th style="padding:1rem 1.25rem;text-align:center;font-family:'Outfit',sans-serif">🟢 Ubiquiti</th>
-            <th style="padding:1rem 1.25rem;text-align:center;font-family:'Outfit',sans-serif">🔴 MikroTik</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="border-bottom:1px solid var(--gray-100)">
-            <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">Ár kategória</td>
-            <td style="padding:.9rem 1.25rem;text-align:center;color:var(--gray-600)">Közepes</td>
-            <td style="padding:.9rem 1.25rem;text-align:center;color:var(--gray-600)">Magas</td>
-            <td style="padding:.9rem 1.25rem;text-align:center;color:var(--gray-600)">Közepes</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--gray-100);background:var(--gray-50)">
-            <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">Kezelhetőség</td>
-            <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐⭐⭐⭐</td>
-            <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐⭐⭐</td>
-            <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--gray-100)">
-            <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">WiFi lefedettség</td>
-            <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐⭐⭐</td>
-            <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐⭐⭐⭐</td>
-            <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐⭐⭐</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--gray-100);background:var(--gray-50)">
-            <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">Tűzfal / VPN</td>
-            <td style="padding:.9rem 1.25rem;text-align:center;color:var(--gray-400)">Alapszintű</td>
-            <td style="padding:.9rem 1.25rem;text-align:center;color:var(--green)">Igen ✓</td>
-            <td style="padding:.9rem 1.25rem;text-align:center;color:var(--green)">Teljes körű ✓</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--gray-100)">
-            <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">Mesh rendszer</td>
-            <td style="padding:.9rem 1.25rem;text-align:center;color:var(--green)">Deco ✓</td>
-            <td style="padding:.9rem 1.25rem;text-align:center;color:var(--green)">UniFi ✓</td>
-            <td style="padding:.9rem 1.25rem;text-align:center;color:var(--green)">CAPsMAN ✓</td>
-          </tr>
-          <tr style="background:var(--gray-50)">
-            <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">Ajánlott esetben</td>
-            <td style="padding:.9rem 1.25rem;text-align:center;font-size:.82rem;color:var(--gray-600)">Kisebb lakás, egyszerű igény</td>
-            <td style="padding:.9rem 1.25rem;text-align:center;font-size:.82rem;color:var(--gray-600)">Nagy ház, igényes user</td>
-            <td style="padding:.9rem 1.25rem;text-align:center;font-size:.82rem;color:var(--gray-600)">Tech-tudatos, home office</td>
-          </tr>
-        </tbody>
-      </table>
+
+    <!-- DESKTOP TABLE (hidden on mobile) -->
+    <div class="compare-table-wrap">
+      <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);overflow:hidden">
+        <table style="width:100%;border-collapse:collapse;font-size:.88rem">
+          <thead>
+            <tr style="background:var(--navy);color:white">
+              <th style="padding:1rem 1.25rem;text-align:left;font-family:'Outfit',sans-serif;width:30%">Szempont</th>
+              <th style="padding:1rem 1.25rem;text-align:center;font-family:'Outfit',sans-serif">🔵 TP-Link</th>
+              <th style="padding:1rem 1.25rem;text-align:center;font-family:'Outfit',sans-serif">🟢 Ubiquiti</th>
+              <th style="padding:1rem 1.25rem;text-align:center;font-family:'Outfit',sans-serif">🔴 MikroTik</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--gray-100)">
+              <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">Ár kategória</td>
+              <td style="padding:.9rem 1.25rem;text-align:center;color:var(--gray-600)">Közepes</td>
+              <td style="padding:.9rem 1.25rem;text-align:center;color:var(--gray-600)">Magas</td>
+              <td style="padding:.9rem 1.25rem;text-align:center;color:var(--gray-600)">Közepes</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--gray-100);background:var(--gray-50)">
+              <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">Kezelhetőség</td>
+              <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐⭐⭐⭐</td>
+              <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐⭐⭐</td>
+              <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--gray-100)">
+              <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">WiFi lefedettség</td>
+              <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐⭐⭐</td>
+              <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐⭐⭐⭐</td>
+              <td style="padding:.9rem 1.25rem;text-align:center">⭐⭐⭐⭐</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--gray-100);background:var(--gray-50)">
+              <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">Tűzfal / VPN</td>
+              <td style="padding:.9rem 1.25rem;text-align:center;color:var(--gray-400)">Alapszintű</td>
+              <td style="padding:.9rem 1.25rem;text-align:center;color:var(--green)">Igen ✓</td>
+              <td style="padding:.9rem 1.25rem;text-align:center;color:var(--green)">Teljes körű ✓</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--gray-100)">
+              <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">Mesh rendszer</td>
+              <td style="padding:.9rem 1.25rem;text-align:center;color:var(--green)">Deco ✓</td>
+              <td style="padding:.9rem 1.25rem;text-align:center;color:var(--green)">UniFi ✓</td>
+              <td style="padding:.9rem 1.25rem;text-align:center;color:var(--green)">CAPsMAN ✓</td>
+            </tr>
+            <tr style="background:var(--gray-50)">
+              <td style="padding:.9rem 1.25rem;font-weight:500;color:var(--gray-800)">Ajánlott esetben</td>
+              <td style="padding:.9rem 1.25rem;text-align:center;font-size:.82rem;color:var(--gray-600)">Kisebb lakás, egyszerű igény</td>
+              <td style="padding:.9rem 1.25rem;text-align:center;font-size:.82rem;color:var(--gray-600)">Nagy ház, igényes user</td>
+              <td style="padding:.9rem 1.25rem;text-align:center;font-size:.82rem;color:var(--gray-600)">Tech-tudatos, home office</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <p style="text-align:center;margin-top:1rem;font-size:.84rem;color:var(--gray-600)">Nem biztos melyik a megfelelő? A helyszíni felmérés után én javaslom a legjobb megoldást – ingyenesen.</p>
+
+    <!-- MOBILE COMPARE CARDS (hidden on desktop) -->
+    <div class="compare-mobile">
+      <!-- TP-Link card -->
+      <div class="compare-card" style="background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius);overflow:hidden">
+        <div style="background:var(--navy);padding:.9rem 1.25rem;display:flex;align-items:center;gap:10px">
+          <span style="font-size:1.4rem">🔵</span>
+          <span style="font-family:'Outfit',sans-serif;font-weight:700;color:white;font-size:1.05rem">TP-Link</span>
+          <span class="badge badge-blue" style="margin-left:auto;font-size:.7rem">Ár-érték</span>
+        </div>
+        <div class="compare-row" style="display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.25rem;border-bottom:1px solid var(--gray-100)">
+          <span style="font-size:.85rem;font-weight:600;color:var(--gray-600)">Ár kategória</span>
+          <span style="font-size:.88rem;color:var(--gray-800)">Közepes</span>
+        </div>
+        <div class="compare-row" style="display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.25rem;border-bottom:1px solid var(--gray-100);background:var(--gray-50)">
+          <span style="font-size:.85rem;font-weight:600;color:var(--gray-600)">Kezelhetőség</span>
+          <span style="font-size:.88rem">⭐⭐⭐⭐⭐</span>
+        </div>
+        <div class="compare-row" style="display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.25rem;border-bottom:1px solid var(--gray-100)">
+          <span style="font-size:.85rem;font-weight:600;color:var(--gray-600)">WiFi lefedettség</span>
+          <span style="font-size:.88rem">⭐⭐⭐⭐</span>
+        </div>
+        <div class="compare-row" style="display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.25rem;border-bottom:1px solid var(--gray-100);background:var(--gray-50)">
+          <span style="font-size:.85rem;font-weight:600;color:var(--gray-600)">Tűzfal / VPN</span>
+          <span style="font-size:.88rem;color:var(--gray-400)">Alapszintű</span>
+        </div>
+        <div class="compare-row" style="display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.25rem;border-bottom:1px solid var(--gray-100)">
+          <span style="font-size:.85rem;font-weight:600;color:var(--gray-600)">Mesh rendszer</span>
+          <span style="font-size:.88rem;color:var(--green)">Deco ✓</span>
+        </div>
+        <div style="padding:.9rem 1.25rem;background:var(--blue-pale);font-size:.82rem;color:var(--navy)">
+          <strong>Kinek ajánlom:</strong> Kisebb lakás, egyszerű igény
+        </div>
+      </div>
+
+      <!-- Ubiquiti card -->
+      <div class="compare-card" style="background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius);overflow:hidden">
+        <div style="background:var(--navy);padding:.9rem 1.25rem;display:flex;align-items:center;gap:10px">
+          <span style="font-size:1.4rem">🟢</span>
+          <span style="font-family:'Outfit',sans-serif;font-weight:700;color:white;font-size:1.05rem">Ubiquiti</span>
+          <span class="badge badge-green" style="margin-left:auto;font-size:.7rem">Prémium</span>
+        </div>
+        <div class="compare-row" style="display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.25rem;border-bottom:1px solid var(--gray-100)">
+          <span style="font-size:.85rem;font-weight:600;color:var(--gray-600)">Ár kategória</span>
+          <span style="font-size:.88rem;color:var(--gray-800)">Magas</span>
+        </div>
+        <div class="compare-row" style="display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.25rem;border-bottom:1px solid var(--gray-100);background:var(--gray-50)">
+          <span style="font-size:.85rem;font-weight:600;color:var(--gray-600)">Kezelhetőség</span>
+          <span style="font-size:.88rem">⭐⭐⭐⭐</span>
+        </div>
+        <div class="compare-row" style="display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.25rem;border-bottom:1px solid var(--gray-100)">
+          <span style="font-size:.85rem;font-weight:600;color:var(--gray-600)">WiFi lefedettség</span>
+          <span style="font-size:.88rem">⭐⭐⭐⭐⭐</span>
+        </div>
+        <div class="compare-row" style="display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.25rem;border-bottom:1px solid var(--gray-100);background:var(--gray-50)">
+          <span style="font-size:.85rem;font-weight:600;color:var(--gray-600)">Tűzfal / VPN</span>
+          <span style="font-size:.88rem;color:var(--green)">Igen ✓</span>
+        </div>
+        <div class="compare-row" style="display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.25rem;border-bottom:1px solid var(--gray-100)">
+          <span style="font-size:.85rem;font-weight:600;color:var(--gray-600)">Mesh rendszer</span>
+          <span style="font-size:.88rem;color:var(--green)">UniFi ✓</span>
+        </div>
+        <div style="padding:.9rem 1.25rem;background:#DCFCE7;font-size:.82rem;color:#166534">
+          <strong>Kinek ajánlom:</strong> Nagy ház, igényes felhasználó
+        </div>
+      </div>
+
+      <!-- MikroTik card -->
+      <div class="compare-card" style="background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius);overflow:hidden">
+        <div style="background:var(--navy);padding:.9rem 1.25rem;display:flex;align-items:center;gap:10px">
+          <span style="font-size:1.4rem">🔴</span>
+          <span style="font-family:'Outfit',sans-serif;font-weight:700;color:white;font-size:1.05rem">MikroTik</span>
+          <span class="badge badge-orange" style="margin-left:auto;font-size:.7rem">Profi</span>
+        </div>
+        <div class="compare-row" style="display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.25rem;border-bottom:1px solid var(--gray-100)">
+          <span style="font-size:.85rem;font-weight:600;color:var(--gray-600)">Ár kategória</span>
+          <span style="font-size:.88rem;color:var(--gray-800)">Közepes</span>
+        </div>
+        <div class="compare-row" style="display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.25rem;border-bottom:1px solid var(--gray-100);background:var(--gray-50)">
+          <span style="font-size:.85rem;font-weight:600;color:var(--gray-600)">Kezelhetőség</span>
+          <span style="font-size:.88rem">⭐⭐</span>
+        </div>
+        <div class="compare-row" style="display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.25rem;border-bottom:1px solid var(--gray-100)">
+          <span style="font-size:.85rem;font-weight:600;color:var(--gray-600)">WiFi lefedettség</span>
+          <span style="font-size:.88rem">⭐⭐⭐⭐</span>
+        </div>
+        <div class="compare-row" style="display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.25rem;border-bottom:1px solid var(--gray-100);background:var(--gray-50)">
+          <span style="font-size:.85rem;font-weight:600;color:var(--gray-600)">Tűzfal / VPN</span>
+          <span style="font-size:.88rem;color:var(--green)">Teljes körű ✓</span>
+        </div>
+        <div class="compare-row" style="display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.25rem;border-bottom:1px solid var(--gray-100)">
+          <span style="font-size:.85rem;font-weight:600;color:var(--gray-600)">Mesh rendszer</span>
+          <span style="font-size:.88rem;color:var(--green)">CAPsMAN ✓</span>
+        </div>
+        <div style="padding:.9rem 1.25rem;background:#FEF3C7;font-size:.82rem;color:#92400E">
+          <strong>Kinek ajánlom:</strong> Tech-tudatos, home office
+        </div>
+      </div>
+    </div>
+
+    <p style="text-align:center;margin-top:1.5rem;font-size:.84rem;color:var(--gray-600)">Nem biztos melyik a megfelelő? A helyszíni felmérés után én javaslom a legjobb megoldást – ingyenesen.</p>
   </div>
 </section>
+
+<style>
+/* Desktop: show table, hide cards */
+.compare-mobile { display: none; }
+.compare-table-wrap { display: block; }
+
+/* Mobile: hide table, show cards */
+@media (max-width: 700px) {
+  .compare-table-wrap { display: none; }
+  .compare-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+}
+</style>
 
 <!-- CTA -->
 <div class="cta-banner">

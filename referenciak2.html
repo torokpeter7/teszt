@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Referenciák – NetKapocs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ---- FILTER BUTTONS ---- */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 2.25rem;
+}
+.filter-btn {
+  padding: 6px 16px;
+  border-radius: 100px;
+  border: 1.5px solid var(--gray-200);
+  background: white;
+  color: var(--gray-600);
+  font-family: 'Outfit', sans-serif;
+  font-size: .84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+}
+.filter-btn:hover { border-color: var(--blue); color: var(--blue); }
+.filter-btn.active { background: var(--navy); border-color: var(--navy); color: white; }
+
+/* ---- REF CARDS GRID ---- */
+.ref-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+/* ---- REF CARD ---- */
+.ref-card {
+  background: white;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all .2s;
+  cursor: default;
+}
+.ref-card:hover {
+  border-color: var(--blue);
+  box-shadow: 0 6px 28px rgba(14,143,224,0.12);
+  transform: translateY(-3px);
+}
+
+.ref-card-header {
+  padding: 1.4rem 1.4rem 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ref-card-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+.icon-bg-blue  { background: var(--blue-pale); }
+.icon-bg-green { background: #DCFCE7; }
+.icon-bg-orange{ background: #FEF3C7; }
+.icon-bg-navy  { background: #EEF2FF; }
+
+.ref-card-body {
+  padding: 1rem 1.4rem 1.4rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.ref-card-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: .35rem;
+}
+
+.ref-card-location {
+  font-size: .8rem;
+  color: var(--gray-400);
+  font-weight: 500;
+  margin-bottom: .75rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ref-card-desc {
+  font-size: .87rem;
+  color: var(--gray-600);
+  line-height: 1.65;
+  flex: 1;
+  margin-bottom: 1.1rem;
+}
+
+.ref-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 1.1rem;
+}
+
+.ref-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.4rem;
+  border-top: 1px solid var(--gray-100);
+  background: var(--gray-50);
+}
+
+.ref-card-stars {
+  color: #F59E0B;
+  font-size: .95rem;
+  letter-spacing: 1px;
+}
+
+.btn-details {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: var(--navy);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: 'Outfit', sans-serif;
+  font-size: .82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s;
+}
+.btn-details:hover { background: var(--blue); }
+
+/* ---- MODAL OVERLAY ---- */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(6px);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.modal-overlay.open { display: flex; }
+
+.modal-box {
+  background: white;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 64px rgba(15,23,42,0.25);
+  animation: modalIn .22s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(16px) scale(.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-header {
+  background: var(--navy);
+  padding: 1.75rem 2rem 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+.modal-header-icon {
+  width: 52px; height: 52px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.12);
+}
+.modal-header-text { flex: 1; }
+.modal-header-text h2 {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+.modal-header-text .modal-location {
+  color: rgba(255,255,255,0.6);
+  font-size: .83rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.modal-close {
+  background: rgba(255,255,255,0.12);
+  border: none;
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background .15s;
+  margin-top: -2px;
+}
+.modal-close:hover { background: rgba(255,255,255,0.22); }
+.modal-close svg { stroke: white; fill: none; stroke-width: 2.5; stroke-linecap: round; }
+
+.modal-body { padding: 1.75rem 2rem; }
+
+.modal-section { margin-bottom: 1.5rem; }
+.modal-section-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: .82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--blue);
+  margin-bottom: .6rem;
+}
+.modal-section p {
+  font-size: .9rem;
+  color: var(--gray-600);
+  line-height: 1.75;
+}
+
+.modal-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+  margin-bottom: 1.5rem;
+}
+.modal-meta-item {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-100);
+  border-radius: 10px;
+  padding: .75rem 1rem;
+}
+.modal-meta-label {
+  font-size: .76rem;
+  color: var(--gray-400);
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+.modal-meta-value {
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--navy);
+  font-family: 'Outfit', sans-serif;
+}
+
+.modal-results {
+  background: var(--blue-pale);
+  border: 1px solid rgba(14,143,224,0.2);
+  border-radius: 10px;
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.modal-results-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: .6rem;
+}
+.modal-results ul {
+  list-style: none;
+  padding: 0; margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.modal-results li {
+  font-size: .86rem;
+  color: var(--gray-600);
+  padding-left: 18px;
+  position: relative;
+}
+.modal-results li::before { content: '✓'; position: absolute; left: 0; color: var(--blue); font-weight: 700; }
+
+.modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 1.5rem;
+}
+
+.modal-footer {
+  padding: 1.25rem 2rem;
+  border-top: 1px solid var(--gray-100);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--gray-50);
+  border-radius: 0 0 16px 16px;
+}
+.modal-stars { color: #F59E0B; font-size: 1.1rem; letter-spacing: 2px; }
+.modal-reviewer {
+  font-size: .83rem;
+  color: var(--gray-400);
+  font-style: italic;
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 900px) {
+  .ref-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 580px) {
+  .ref-grid { grid-template-columns: 1fr; }
+  .modal-meta-grid { grid-template-columns: 1fr; }
+  .modal-body { padding: 1.25rem 1.25rem; }
+  .modal-header { padding: 1.25rem 1.25rem 1rem; }
+  .modal-footer { padding: 1rem 1.25rem; flex-direction: column; gap: 8px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="mainNav">
+  <a class="logo" href="index.html">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </div>
+    Net<span>Kapocs</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Főoldal</a></li>
+    <li><a href="szolgaltatasok.html">Szolgáltatások</a></li>
+    <li><a href="eszkozok.html">Eszközök</a></li>
+    <li><a href="referenciak.html" class="active">Referenciák</a></li>
+    <li><a href="rolam.html">Rólam</a></li>
+    <li><a href="kapcsolat.html" class="nav-cta">Kapcsolat</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- PAGE HEADER -->
+<div style="background:var(--navy);color:white;padding:4rem 2rem 3rem">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="section-tag" style="margin-bottom:.8rem">Elvégzett munkák</div>
+    <h1 style="color:white;font-size:clamp(2rem,4vw,2.8rem);font-weight:800;margin-bottom:.9rem">Referenciáim</h1>
+    <p style="color:rgba(255,255,255,0.7);max-width:560px;font-size:1.02rem;line-height:1.75">Valós projektek, valós ügyfelektől. Kattintson bármelyik kártyára a részletekért.</p>
+    <!-- Stats row -->
+    <div style="display:flex;gap:2rem;flex-wrap:wrap;margin-top:2rem">
+      <div>
+        <div style="font-family:'Outfit',sans-serif;font-size:1.8rem;font-weight:800;color:white" id="statCount">0</div>
+        <div style="color:rgba(255,255,255,0.55);font-size:.82rem;margin-top:2px">Elvégzett projekt</div>
+      </div>
+      <div style="width:1px;background:rgba(255,255,255,0.15)"></div>
+      <div>
+        <div style="font-family:'Outfit',sans-serif;font-size:1.8rem;font-weight:800;color:white">100%</div>
+        <div style="color:rgba(255,255,255,0.55);font-size:.82rem;margin-top:2px">Elégedett ügyfél</div>
+      </div>
+      <div style="width:1px;background:rgba(255,255,255,0.15)"></div>
+      <div>
+        <div style="font-family:'Outfit',sans-serif;font-size:1.8rem;font-weight:800;color:white">⭐ 5.0</div>
+        <div style="color:rgba(255,255,255,0.55);font-size:.82rem;margin-top:2px">Átlagos értékelés</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<section class="section section-alt" style="padding-top:3rem">
+  <div class="section-inner">
+
+    <!-- Filter bar -->
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-btn active" data-filter="all" onclick="filterCards('all', this)">Összes</button>
+      <button class="filter-btn" data-filter="tp-link" onclick="filterCards('tp-link', this)">🔵 TP-Link</button>
+      <button class="filter-btn" data-filter="ubiquiti" onclick="filterCards('ubiquiti', this)">🟢 Ubiquiti</button>
+      <button class="filter-btn" data-filter="mikrotik" onclick="filterCards('mikrotik', this)">🔴 MikroTik</button>
+      <button class="filter-btn" data-filter="kabelez" onclick="filterCards('kabelez', this)">🔌 Kábelezés</button>
+    </div>
+
+    <!-- Cards grid -->
+    <div class="ref-grid" id="refGrid">
+
+      <!-- ============================================================
+           REFERENCIA KÁRTYA #1
+           Másolja ezt a blokkot új referencia hozzáadásához!
+           data-filter: tp-link | ubiquiti | mikrotik | kabelez
+           ============================================================ -->
+      <div class="ref-card" data-filter="ubiquiti">
+        <div class="ref-card-header">
+          <div class="ref-card-icon icon-bg-green">🏡</div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+            <span class="badge badge-green" style="font-size:.72rem">TP-Link Eszközök</span>
+            <span style="font-size:.75rem;color:var(--gray-400)">2024. október</span>
+          </div>
+        </div>
+        <div class="ref-card-body">
+          <div class="ref-card-title">Otthoni hálózat korszerűsítés és WiFi lefedettség bővítés</div>
+          <div class="ref-card-location">
+            <svg width="11" height="11" viewBox="0 0 24 24" style="stroke:var(--gray-400);fill:none;stroke-width:2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Kecskemét
+          </div>
+          <p class="ref-card-desc">Kétszintes, 200 m²-es ház teljes hálózat kiépítése az alapoktól. 3 TP-Link access point, strukturált Cat6 kábelezés, vendég WiFi és okosotthon szegmens kialakítása.</p>
+          <div class="ref-card-tags">
+            <span class="badge badge-green">TP-Link AP</span>
+            <span class="badge badge-navy">Cat5e</span>
+            <span class="badge badge-blue">Mesh</span>
+            <span class="badge badge-orange">IoT</span>
+          </div>
+        </div>
+        <div class="ref-card-footer">
+          <div class="ref-card-stars">★★★★★</div>
+          <button class="btn-details" onclick="openModal('modal-1')">
+            Részletek
+            <svg width="13" height="13" viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- REFERENCIA KÁRTYA #2 -->
+      <div class="ref-card" data-filter="tp-link">
+        <div class="ref-card-header">
+          <div class="ref-card-icon icon-bg-blue">🏢</div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+            <span class="badge badge-blue" style="font-size:.72rem">TP-Link Deco</span>
+            <span style="font-size:.75rem;color:var(--gray-400)">2024. augusztus</span>
+          </div>
+        </div>
+        <div class="ref-card-body">
+          <div class="ref-card-title">Lakásbővítés – WiFi holtpontok megszüntetése</div>
+          <div class="ref-card-location">
+            <svg width="11" height="11" viewBox="0 0 24 24" style="stroke:var(--gray-400);fill:none;stroke-width:2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Kiskunhalas
+          </div>
+          <p class="ref-card-desc">80 m²-es lakás, ahol a nappali és a hálószoba között teljesen kiesett a WiFi jel. Mesh rendszer kiépítésével minden szobában stabil, 300+ Mbps sebesség lett elérhető.</p>
+          <div class="ref-card-tags">
+            <span class="badge badge-blue">TP-Link Deco</span>
+            <span class="badge badge-green">Mesh</span>
+            <span class="badge badge-navy">WiFi 6</span>
+          </div>
+        </div>
+        <div class="ref-card-footer">
+          <div class="ref-card-stars">★★★★★</div>
+          <button class="btn-details" onclick="openModal('modal-2')">
+            Részletek
+            <svg width="13" height="13" viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- REFERENCIA KÁRTYA #3 -->
+      <div class="ref-card" data-filter="mikrotik">
+        <div class="ref-card-header">
+          <div class="ref-card-icon icon-bg-orange">🏠</div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+            <span class="badge badge-orange" style="font-size:.72rem">MikroTik</span>
+            <span style="font-size:.75rem;color:var(--gray-400)">2024. május</span>
+          </div>
+        </div>
+        <div class="ref-card-body">
+          <div class="ref-card-title">Home office hálózat – VPN + VLAN</div>
+          <div class="ref-card-location">
+            <svg width="11" height="11" viewBox="0 0 24 24" style="stroke:var(--gray-400);fill:none;stroke-width:2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Baja
+          </div>
+          <p class="ref-card-desc">Otthonából dolgozó ügyvéd részére biztonságos home office hálózat kiépítése. MikroTik alapon VLAN szegmentálás, WireGuard VPN, tűzfal szabályok és sávszélesség prioritizálás.</p>
+          <div class="ref-card-tags">
+            <span class="badge badge-orange">MikroTik</span>
+            <span class="badge badge-navy">VPN</span>
+            <span class="badge badge-blue">VLAN</span>
+            <span class="badge badge-green">Tűzfal</span>
+          </div>
+        </div>
+        <div class="ref-card-footer">
+          <div class="ref-card-stars">★★★★★</div>
+          <button class="btn-details" onclick="openModal('modal-3')">
+            Részletek
+            <svg width="13" height="13" viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+ 
+
+    </div><!-- /ref-grid -->
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <h2>Szeretne hasonló eredményt?</h2>
+  <p>Ingyenes helyszíni felmérés – kötelezettség nélkül.</p>
+  <a href="kapcsolat.html" class="btn btn-primary">Kapcsolatfelvétel →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Net<span>Kapocs</span></div>
+      <div class="footer-desc">Stabil WiFi minden szobában. Profi TP-Link, Ubiquiti és MikroTik eszközökkel. Bács-Kiskun Vármegye.</div>
+    </div>
+    <div class="footer-col">
+      <h4>Oldalak</h4>
+      <a href="index.html">Főoldal</a>
+      <a href="szolgaltatasok.html">Szolgáltatások</a>
+      <a href="eszkozok.html">Eszközök</a>
+      <a href="rolam.html">Rólam</a>
+      <a href="referenciak.html">Referenciák</a>
+      <a href="kapcsolat.html">Kapcsolat</a>
+    </div>
+    <div class="footer-col">
+      <h4>Eszközök</h4>
+      <a href="eszkozok.html">🔵 TP-Link</a>
+      <a href="eszkozok.html">🟢 Ubiquiti UniFi</a>
+      <a href="eszkozok.html">🔴 MikroTik</a>
+    </div>
+    <div class="footer-col">
+      <h4>Elérhetőség</h4>
+      <a href="tel:+36309654445">+36 30 965 4445</a>
+      <a href="mailto:mail.torokpeter@gmail.com">mail.torokpeter@gmail.com</a>
+      <a>Bács-Kiskun Vármegye</a>
+      <a>H–P: 8:00–18:00 | Szo: 9:00–12:00</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 NetKapocs – Minden jog fenntartva</span>
+    <span>Otthoni hálózat kiépítési specialista</span>
+  </div>
+</footer>
+
+
+<!-- ================================================================
+     MODAL ABLAKOK
+     Minden kártyához tartozik egy modal – a tartalmakat itt szerkesztheti.
+     ================================================================ -->
+
+<!-- MODAL #1 – Kecskemét, UniFi -->
+<div class="modal-overlay" id="modal-1" onclick="closeOnBackdrop(event, 'modal-1')">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-header-icon">🏡</div>
+      <div class="modal-header-text">
+        <h2>Otthoni hálózat korszerűsítés és WiFi lefedettség bővítés</h2>
+        <div class="modal-location">
+          <svg width="12" height="12" viewBox="0 0 24 24" style="stroke:rgba(255,255,255,0.6);fill:none;stroke-width:2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Kelebia · 2024. október
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-1')">
+        <svg width="16" height="16" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta-grid">
+        <div class="modal-meta-item">
+          <div class="modal-meta-label">Helyszín</div>
+          <div class="modal-meta-value">Kelebia</div>
+        </div>
+        <div class="modal-meta-item">
+          <div class="modal-meta-label">Alapterület</div>
+          <div class="modal-meta-value">200 m², 2 szint</div>
+        </div>
+        <div class="modal-meta-item">
+          <div class="modal-meta-label">Eszközök</div>
+          <div class="modal-meta-value">TP-Link Eszközök</div>
+        </div>
+        <div class="modal-meta-item">
+          <div class="modal-meta-label">Munkaidő</div>
+          <div class="modal-meta-value">3 óra</div>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">A helyzet</div>
+        <p>A megrendelő otthoni hálózata már korábban ki volt építve, azonban a régi UTP kábelezés miatt a rendszer nem tudta kihasználni az internetelőfizetés teljes sebességét. A kertben, garázsban és a jakuzzi környékén a WiFi kapcsolat instabil volt.</p>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">A megoldás</div>
+        <p>A meglévő kábelezés CAT5e kábelre lett cserélve 🔌, amely már támogatja a gigabites adatátvitelt. A hálózat bővítésére egy TP-Link router került telepítésre Access Point módban, így az udvaron, medence mellett és a garázsban is stabil WiFi lefedettség vált elérhetővé 🌿🏊. A jakuzzi mellett található televízió számára szintén stabil kapcsolatot biztosítottunk, így a TV adás és streaming szolgáltatások is zavartalanul működnek 📺.</p>
+      </div>
+
+      <div class="modal-results">
+        <div class="modal-results-title">📊 Eredmények</div>
+        <ul>
+          <li>800 Mbps vezetékes sebesség</li>
+          <li>Stabil 400 Mbps WiFi kapcsolat</li>
+          <li>Teljes kültéri WiFi lefedettség</li>
+          <li>Megbízható streaming és multimédiás kapcsolat</li>
+          <li>Teljes hálózati dokumentáció és betanítás átadva</li>
+        </ul>
+      </div>
+
+      <div class="modal-tags">
+        <span class="badge badge-green">CAT5e kábelezés</span>
+        <span class="badge badge-navy">TP-Link Access Point</span>
+        <span class="badge badge-blue">Gigabites hálózat</span>
+        <span class="badge badge-orange">Kültéri WiFi</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div>
+        <div class="modal-stars">★★★★★</div>
+        <div class="modal-reviewer">„Nagyon elégedett vagyok a hálózat korszerűsítésével. A korábbi lassú és instabil kapcsolat helyett most mindenhol gyors és megbízható internetem van. Precíz, gyors és szakszerű munka történt.” - László</div>
+      </div>
+      <a href="kapcsolat.html" class="btn btn-dark" style="font-size:.85rem;padding:.6rem 1.1rem">Hasonlót kérek →</a>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL #2 – Kiskunhalas, TP-Link -->
+<div class="modal-overlay" id="modal-2" onclick="closeOnBackdrop(event, 'modal-2')">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-header-icon">🏢</div>
+      <div class="modal-header-text">
+        <h2>Lakásbővítés – WiFi holtpontok megszüntetése</h2>
+        <div class="modal-location">
+          <svg width="12" height="12" viewBox="0 0 24 24" style="stroke:rgba(255,255,255,0.6);fill:none;stroke-width:2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Kiskunhalas · 2024. augusztus
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-2')">
+        <svg width="16" height="16" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta-grid">
+        <div class="modal-meta-item">
+          <div class="modal-meta-label">Helyszín</div>
+          <div class="modal-meta-value">Kiskunhalas</div>
+        </div>
+        <div class="modal-meta-item">
+          <div class="modal-meta-label">Alapterület</div>
+          <div class="modal-meta-value">80 m², 1 szint</div>
+        </div>
+        <div class="modal-meta-item">
+          <div class="modal-meta-label">Eszközök</div>
+          <div class="modal-meta-value">TP-Link Deco XE75</div>
+        </div>
+        <div class="modal-meta-item">
+          <div class="modal-meta-label">Munkaidő</div>
+          <div class="modal-meta-value">3 óra</div>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">A helyzet</div>
+        <p>Az ügyfél panelban lakott, ahol a vastag beton falak miatt a hálóból és a fürdőszobából szinte nem lehetett elérni a szolgáltató routerét. Online meetingek közben állandóan szakadt a kapcsolat.</p>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">A megoldás</div>
+        <p>A meglévő router megtartása mellett 2 db TP-Link Deco XE75 egységet telepítettünk mesh rendszerben – egyet a nappaliba, egyet a hálószoba és a fürdőszoba közé. Az egységek között powerline adaptert alkalmaztunk a megbízható backhaul érdekében, így nem volt szükség kábelezési munkára.</p>
+      </div>
+
+      <div class="modal-results">
+        <div class="modal-results-title">📊 Eredmények</div>
+        <ul>
+          <li>Minden helyiségben 300+ Mbps sebesség</li>
+          <li>Nulla leesett online meeting azóta</li>
+          <li>Gyors, fél napos beavatkozás – kábelezés nélkül</li>
+        </ul>
+      </div>
+
+      <div class="modal-tags">
+        <span class="badge badge-blue">TP-Link Deco XE75 ×2</span>
+        <span class="badge badge-navy">Powerline backhaul</span>
+        <span class="badge badge-green">WiFi 6E</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div>
+        <div class="modal-stars">★★★★★</div>
+        <div class="modal-reviewer">„Fél nap alatt megoldotta, amit én hónapokig nem tudtam." – V. Anna, Kiskunhalas</div>
+      </div>
+      <a href="kapcsolat.html" class="btn btn-dark" style="font-size:.85rem;padding:.6rem 1.1rem">Hasonlót kérek →</a>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL #3 – Baja, MikroTik -->
+<div class="modal-overlay" id="modal-3" onclick="closeOnBackdrop(event, 'modal-3')">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-header-icon">🏠</div>
+      <div class="modal-header-text">
+        <h2>Home office hálózat – VPN + VLAN</h2>
+        <div class="modal-location">
+          <svg width="12" height="12" viewBox="0 0 24 24" style="stroke:rgba(255,255,255,0.6);fill:none;stroke-width:2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Baja · 2024. május
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-3')">
+        <svg width="16" height="16" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta-grid">
+        <div class="modal-meta-item">
+          <div class="modal-meta-label">Helyszín</div>
+          <div class="modal-meta-value">Baja</div>
+        </div>
+        <div class="modal-meta-item">
+          <div class="modal-meta-label">Felhasználás</div>
+          <div class="modal-meta-value">Home office (ügyvéd)</div>
+        </div>
+        <div class="modal-meta-item">
+          <div class="modal-meta-label">Eszközök</div>
+          <div class="modal-meta-value">MikroTik hAP ax³</div>
+        </div>
+        <div class="modal-meta-item">
+          <div class="modal-meta-label">Munkaidő</div>
+          <div class="modal-meta-value">4 óra</div>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">A helyzet</div>
+        <p>Az ügyfél ügyvédként otthonról dolgozik, és szükséges volt, hogy az irodai VPN-en keresztül biztonságosan csatlakozzon a munkahelyi rendszerekhez, miközben a privát és az irodai forgalom teljesen elkülönül egymástól.</p>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">A megoldás</div>
+        <p>MikroTik hAP ax³ router telepítése RouterOS-sel. 3 VLAN kialakítása: munka (WireGuard VPN az irodai szerverhez), privát és vendég. Tűzfal szabályok beállítása, QoS konfiguráció a videóhívások prioritizálásához. Részletes dokumentáció és betanítás átadva.</p>
+      </div>
+
+      <div class="modal-results">
+        <div class="modal-results-title">📊 Eredmények</div>
+        <ul>
+          <li>Stabil WireGuard VPN az irodai szerverhez</li>
+          <li>Teljesen elkülönített munka és privát hálózat</li>
+          <li>Videóhívások megszakítás nélkül, prioritizált sávszélesség</li>
+          <li>Teljes dokumentáció és hozzáférési útmutató átadva</li>
+        </ul>
+      </div>
+
+      <div class="modal-tags">
+        <span class="badge badge-orange">MikroTik hAP ax³</span>
+        <span class="badge badge-navy">WireGuard VPN</span>
+        <span class="badge badge-blue">3× VLAN</span>
+        <span class="badge badge-green">QoS</span>
+        <span class="badge badge-orange">Tűzfal</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div>
+        <div class="modal-stars">★★★★★</div>
+        <div class="modal-reviewer">„Profi munka, elmagyarázott mindent érthetően." – Dr. S. László, Baja</div>
+      </div>
+      <a href="kapcsolat.html" class="btn btn-dark" style="font-size:.85rem;padding:.6rem 1.1rem">Hasonlót kérek →</a>
+    </div>
+  </div>
+</div>
+
+
+<script>
+/* ---- NAVBAR ---- */
+function toggleMenu() {
+  const nav = document.getElementById('navLinks');
+  const btn = document.getElementById('hamburger');
+  nav.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  const nav = document.getElementById('navLinks');
+  const btn = document.getElementById('hamburger');
+  if (!nav.contains(e.target) && !btn.contains(e.target)) {
+    nav.classList.remove('open');
+    btn.classList.remove('open');
+  }
+});
+
+/* ---- FILTER ---- */
+function filterCards(filter, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.ref-card').forEach(card => {
+    const tags = card.dataset.filter || '';
+    if (filter === 'all' || tags.includes(filter)) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+/* ---- MODAL ---- */
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeOnBackdrop(e, id) {
+  if (e.target === document.getElementById(id)) closeModal(id);
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(m => {
+      m.classList.remove('open');
+    });
+    document.body.style.overflow = '';
+  }
+});
+
+/* ---- STAT COUNTER ANIMATION ---- */
+function animateCount(el, target, duration) {
+  let start = 0;
+  const step = target / (duration / 16);
+  const timer = setInterval(() => {
+    start = Math.min(start + step, target);
+    el.textContent = Math.floor(start) + '+';
+    if (start >= target) { el.textContent = target + '+'; clearInterval(timer); }
+  }, 16);
+}
+// Count visible ref cards on load
+window.addEventListener('DOMContentLoaded', () => {
+  const total = document.querySelectorAll('.ref-card').length;
+  animateCount(document.getElementById('statCount'), total, 800);
+});
+</script>
+</body>
+</html>

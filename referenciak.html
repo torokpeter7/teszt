@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Referenciák – NetKapocs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<!-- Supabase JS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+
+<style>
+/* ---- SUPABASE KONFIGURÁCIÓ HELYE ---- */
+/* Lásd a script blokkot a fájl alján    */
+
+/* ---- FILTER BUTTONS ---- */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 2.25rem;
+}
+.filter-btn {
+  padding: 6px 16px;
+  border-radius: 100px;
+  border: 1.5px solid var(--gray-200);
+  background: white;
+  color: var(--gray-600);
+  font-family: 'Outfit', sans-serif;
+  font-size: .84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+}
+.filter-btn:hover { border-color: var(--blue); color: var(--blue); }
+.filter-btn.active { background: var(--navy); border-color: var(--navy); color: white; }
+
+/* ---- REF CARDS GRID ---- */
+.ref-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+/* ---- LOADING SKELETON ---- */
+.skeleton-card {
+  background: white;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius, 12px);
+  height: 280px;
+  overflow: hidden;
+  position: relative;
+}
+.skeleton-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+.skeleton-inner {
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+  background: linear-gradient(135deg, #f3f4f6 0%, #e9edf2 100%);
+}
+.skeleton-row {
+  height: 14px;
+  border-radius: 7px;
+  background: rgba(0,0,0,0.08);
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ---- ERROR STATE ---- */
+.error-state {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--gray-400);
+}
+.error-state .error-icon { font-size: 2.5rem; margin-bottom: .75rem; }
+.error-state p { font-size: .95rem; }
+.error-state code {
+  display: inline-block;
+  margin-top: .5rem;
+  padding: .3rem .6rem;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  font-size: .8rem;
+  color: #dc2626;
+}
+
+/* ---- REF CARD ---- */
+.ref-card {
+  background: white;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius, 12px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all .2s;
+  cursor: default;
+}
+.ref-card:hover {
+  border-color: var(--blue);
+  box-shadow: 0 6px 28px rgba(14,143,224,0.12);
+  transform: translateY(-3px);
+}
+
+.ref-card-header {
+  padding: 1.4rem 1.4rem 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ref-card-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+.icon-bg-blue  { background: var(--blue-pale, #EBF5FE); }
+.icon-bg-green { background: #DCFCE7; }
+.icon-bg-orange{ background: #FEF3C7; }
+.icon-bg-navy  { background: #EEF2FF; }
+
+.ref-card-body {
+  padding: 1rem 1.4rem 1.4rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.ref-card-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--navy, #0F172A);
+  margin-bottom: .35rem;
+}
+
+.ref-card-location {
+  font-size: .8rem;
+  color: var(--gray-400, #9CA3AF);
+  font-weight: 500;
+  margin-bottom: .75rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ref-card-desc {
+  font-size: .87rem;
+  color: var(--gray-600, #4B5563);
+  line-height: 1.65;
+  flex: 1;
+  margin-bottom: 1.1rem;
+}
+
+.ref-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 1.1rem;
+}
+
+.ref-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.4rem;
+  border-top: 1px solid var(--gray-100, #F3F4F6);
+  background: var(--gray-50, #F9FAFB);
+}
+
+.ref-card-stars {
+  color: #F59E0B;
+  font-size: .95rem;
+  letter-spacing: 1px;
+}
+
+.btn-details {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: var(--navy, #0F172A);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm, 8px);
+  font-family: 'Outfit', sans-serif;
+  font-size: .82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s;
+}
+.btn-details:hover { background: var(--blue, #0E8FE0); }
+
+/* ---- BADGE HELPERS (ha style.css-ből hiányoznának) ---- */
+.badge { display:inline-block; padding:3px 10px; border-radius:100px; font-size:.78rem; font-weight:600; font-family:'Outfit',sans-serif; }
+.badge-blue   { background:var(--blue-pale,#EBF5FE); color:var(--blue,#0E8FE0); }
+.badge-green  { background:#DCFCE7; color:#16A34A; }
+.badge-orange { background:#FEF3C7; color:#D97706; }
+.badge-navy   { background:#EEF2FF; color:var(--navy,#0F172A); }
+
+/* ---- MODAL OVERLAY ---- */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(6px);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.modal-overlay.open { display: flex; }
+
+.modal-box {
+  background: white;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 64px rgba(15,23,42,0.25);
+  animation: modalIn .22s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(16px) scale(.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-header {
+  background: var(--navy, #0F172A);
+  padding: 1.75rem 2rem 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+.modal-header-icon {
+  width: 52px; height: 52px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.12);
+}
+.modal-header-text { flex: 1; }
+.modal-header-text h2 {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+.modal-header-text .modal-location {
+  color: rgba(255,255,255,0.6);
+  font-size: .83rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.modal-close {
+  background: rgba(255,255,255,0.12);
+  border: none;
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background .15s;
+  margin-top: -2px;
+}
+.modal-close:hover { background: rgba(255,255,255,0.22); }
+.modal-close svg { stroke: white; fill: none; stroke-width: 2.5; stroke-linecap: round; }
+
+.modal-body { padding: 1.75rem 2rem; }
+
+.modal-section { margin-bottom: 1.5rem; }
+.modal-section-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: .82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--blue, #0E8FE0);
+  margin-bottom: .6rem;
+}
+.modal-section p {
+  font-size: .9rem;
+  color: var(--gray-600, #4B5563);
+  line-height: 1.75;
+}
+
+.modal-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+  margin-bottom: 1.5rem;
+}
+.modal-meta-item {
+  border: 1px solid var(--gray-100, #F3F4F6);
+  border-radius: 10px;
+  padding: .75rem 1rem;
+  background: var(--gray-50, #F9FAFB);
+}
+.modal-meta-label {
+  font-size: .76rem;
+  color: var(--gray-400, #9CA3AF);
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+.modal-meta-value {
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--navy, #0F172A);
+  font-family: 'Outfit', sans-serif;
+}
+
+.modal-results {
+  background: var(--blue-pale, #EBF5FE);
+  border: 1px solid rgba(14,143,224,0.2);
+  border-radius: 10px;
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.modal-results-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--navy, #0F172A);
+  margin-bottom: .6rem;
+}
+.modal-results ul {
+  list-style: none;
+  padding: 0; margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.modal-results li {
+  font-size: .86rem;
+  color: var(--gray-600, #4B5563);
+  padding-left: 18px;
+  position: relative;
+}
+.modal-results li::before { content: '✓'; position: absolute; left: 0; color: var(--blue, #0E8FE0); font-weight: 700; }
+
+.modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 1.5rem;
+}
+
+.modal-footer {
+  padding: 1.25rem 2rem;
+  border-top: 1px solid var(--gray-100, #F3F4F6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--gray-50, #F9FAFB);
+  border-radius: 0 0 16px 16px;
+}
+.modal-stars { color: #F59E0B; font-size: 1.1rem; letter-spacing: 2px; }
+.modal-reviewer {
+  font-size: .83rem;
+  color: var(--gray-400, #9CA3AF);
+  font-style: italic;
+  margin-top: 3px;
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 900px) {
+  .ref-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 580px) {
+  .ref-grid { grid-template-columns: 1fr; }
+  .modal-meta-grid { grid-template-columns: 1fr; }
+  .modal-body { padding: 1.25rem 1.25rem; }
+  .modal-header { padding: 1.25rem 1.25rem 1rem; }
+  .modal-footer { padding: 1rem 1.25rem; flex-direction: column; gap: 8px; text-align: center; }
+}
+</style>
+<link rel="icon" type="image/png" href="/image/icon.png">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="mainNav">
+  <a class="logo" href="index.html">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </div>
+    Net<span>Kapocs</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Főoldal</a></li>
+    <li><a href="szolgaltatasok.html">Szolgáltatások</a></li>
+    <li><a href="eszkozok.html">Eszközök</a></li>
+    <li><a href="referenciak.html" class="active">Referenciák</a></li>
+    <li><a href="rolam.html">Rólam</a></li>
+    <li><a href="kapcsolat.html" class="nav-cta">Kapcsolat</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- PAGE HEADER -->
+<div style="background:var(--navy);color:white;padding:4rem 2rem 3rem">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="section-tag" style="margin-bottom:.8rem">Elvégzett munkák</div>
+    <h1 style="color:white;font-size:clamp(2rem,4vw,2.8rem);font-weight:800;margin-bottom:.9rem">Referenciáim</h1>
+    <p style="color:rgba(255,255,255,0.7);max-width:560px;font-size:1.02rem;line-height:1.75">Valós projektek, valós ügyfelektől. Kattintson bármelyik kártyára a részletekért.</p>
+    <div style="display:flex;gap:2rem;flex-wrap:wrap;margin-top:2rem">
+      <div>
+        <div style="font-family:'Outfit',sans-serif;font-size:1.8rem;font-weight:800;color:white" id="statCount">0</div>
+        <div style="color:rgba(255,255,255,0.55);font-size:.82rem;margin-top:2px">Elvégzett projekt</div>
+      </div>
+      <div style="width:1px;background:rgba(255,255,255,0.15)"></div>
+      <div>
+        <div style="font-family:'Outfit',sans-serif;font-size:1.8rem;font-weight:800;color:white">100%</div>
+        <div style="color:rgba(255,255,255,0.55);font-size:.82rem;margin-top:2px">Elégedett ügyfél</div>
+      </div>
+      <div style="width:1px;background:rgba(255,255,255,0.15)"></div>
+      <div>
+        <div style="font-family:'Outfit',sans-serif;font-size:1.8rem;font-weight:800;color:white">⭐ 5.0</div>
+        <div style="color:rgba(255,255,255,0.55);font-size:.82rem;margin-top:2px">Átlagos értékelés</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<section class="section section-alt" style="padding-top:3rem">
+  <div class="section-inner">
+<!--
+ Filter bar
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-btn active" data-filter="all" onclick="filterCards('all', this)">Összes</button>
+      <button class="filter-btn" data-filter="tp-link"  onclick="filterCards('tp-link', this)">🔵 TP-Link</button>
+      <button class="filter-btn" data-filter="ubiquiti" onclick="filterCards('ubiquiti', this)">🟢 Ubiquiti</button>
+      <button class="filter-btn" data-filter="mikrotik" onclick="filterCards('mikrotik', this)">🔴 MikroTik</button>
+      <button class="filter-btn" data-filter="kabelez"  onclick="filterCards('kabelez', this)">🔌 Kábelezés</button>
+    </div>
+-->
+    <!-- Cards grid – JS tölti fel -->
+    <div class="ref-grid" id="refGrid">
+      <!-- Skeleton betöltés közben -->
+      <div class="skeleton-card"><div class="skeleton-inner"><div class="skeleton-row" style="width:40%;height:48px;border-radius:12px"></div><div class="skeleton-row" style="width:80%"></div><div class="skeleton-row" style="width:60%"></div><div class="skeleton-row" style="width:90%"></div><div class="skeleton-row" style="width:90%"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-inner"><div class="skeleton-row" style="width:40%;height:48px;border-radius:12px"></div><div class="skeleton-row" style="width:80%"></div><div class="skeleton-row" style="width:60%"></div><div class="skeleton-row" style="width:90%"></div><div class="skeleton-row" style="width:90%"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-inner"><div class="skeleton-row" style="width:40%;height:48px;border-radius:12px"></div><div class="skeleton-row" style="width:80%"></div><div class="skeleton-row" style="width:60%"></div><div class="skeleton-row" style="width:90%"></div><div class="skeleton-row" style="width:90%"></div></div></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <h2>Szeretne hasonló eredményt?</h2>
+  <p>Ingyenes helyszíni felmérés – kötelezettség nélkül.</p>
+  <a href="kapcsolat.html" class="btn btn-primary">Kapcsolatfelvétel →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Net<span>Kapocs</span></div>
+      <div class="footer-desc">Stabil WiFi minden szobában. Profi TP-Link, Ubiquiti és MikroTik eszközökkel. Bács-Kiskun Vármegye.</div>
+    </div>
+    <div class="footer-col">
+      <h4>Oldalak</h4>
+      <a href="index.html">Főoldal</a>
+      <a href="szolgaltatasok.html">Szolgáltatások</a>
+      <a href="eszkozok.html">Eszközök</a>
+      <a href="rolam.html">Rólam</a>
+      <a href="referenciak.html">Referenciák</a>
+      <a href="kapcsolat.html">Kapcsolat</a>
+    </div>
+    <div class="footer-col">
+      <h4>Eszközök</h4>
+      <a href="eszkozok.html">🔵 TP-Link</a>
+      <a href="eszkozok.html">🟢 Ubiquiti UniFi</a>
+      <a href="eszkozok.html">🔴 MikroTik</a>
+    </div>
+    <div class="footer-col">
+      <h4>Elérhetőség</h4>
+      <a href="tel:+36309654445">+36 30 965 4445</a>
+      <a href="mailto:mail.torokpeter@gmail.com">mail.torokpeter@gmail.com</a>
+      <a>Bács-Kiskun Vármegye</a>
+      <a>H–P: 8:00–18:00 | Szo: 9:00–12:00</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 NetKapocs – Minden jog fenntartva</span>
+    <span>Otthoni hálózat kiépítési specialista</span>
+  </div>
+</footer>
+
+<!-- Modal konténer – JS tölti fel -->
+<div id="modalContainer"></div>
+
+<script>
+/* ============================================================
+   SUPABASE KONFIGURÁCIÓ
+   Cseréld ki saját URL-edre és anon kulcsodra!
+   Megtalálod: Supabase → Project Settings → API
+   ============================================================ */
+const SUPABASE_URL  = 'https://raffjcgwnmqspfnrsqos.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_zIE0yHIV_e_0qub6qXTaJA_hVeTdFL7';
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+function toggleMenu() {
+  const nav = document.getElementById('navLinks');
+  const btn = document.getElementById('hamburger');
+  nav.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  const nav = document.getElementById('navLinks');
+  const btn = document.getElementById('hamburger');
+  if (!nav.contains(e.target) && !btn.contains(e.target)) {
+    nav.classList.remove('open');
+    btn.classList.remove('open');
+  }
+});
+
+/* ============================================================
+   SZŰRŐ
+   ============================================================ */
+function filterCards(filter, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.ref-card').forEach(card => {
+    const tags = card.dataset.filter || '';
+    card.style.display = (filter === 'all' || tags.includes(filter)) ? '' : 'none';
+  });
+}
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeOnBackdrop(e, id) {
+  if (e.target === document.getElementById(id)) closeModal(id);
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(m => {
+      m.classList.remove('open');
+    });
+    document.body.style.overflow = '';
+  }
+});
+
+/* ============================================================
+   STAT SZÁMLÁLÓ ANIMÁCIÓ
+   ============================================================ */
+function animateCount(el, target, duration) {
+  let start = 0;
+  const step = target / (duration / 16);
+  const timer = setInterval(() => {
+    start = Math.min(start + step, target);
+    el.textContent = Math.floor(start) + '+';
+    if (start >= target) { el.textContent = target + '+'; clearInterval(timer); }
+  }, 16);
+}
+
+/* ============================================================
+   SEGÉDFÜGGVÉNYEK – HTML GENERÁLÁS
+   ============================================================ */
+const PIN_SVG_CARD = `<svg width="11" height="11" viewBox="0 0 24 24" style="stroke:var(--gray-400);fill:none;stroke-width:2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>`;
+const PIN_SVG_MODAL = `<svg width="12" height="12" viewBox="0 0 24 24" style="stroke:rgba(255,255,255,0.6);fill:none;stroke-width:2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>`;
+const ARROW_SVG = `<svg width="13" height="13" viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+const CLOSE_SVG = `<svg width="16" height="16" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+
+function starsHtml(count) {
+  return '★'.repeat(count);
+}
+
+function tagsHtml(tags) {
+  return tags.map(t => `<span class="badge badge-${t.color}">${t.text}</span>`).join('');
+}
+
+function buildCard(ref) {
+  const modalId = `modal-${ref.id}`;
+  const filterStr = ref.filters.join(' ');
+  return `
+    <div class="ref-card" data-filter="${filterStr}">
+      <div class="ref-card-header">
+        <div class="ref-card-icon icon-bg-${ref.icon_bg}">${ref.icon}</div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+          <span class="badge badge-${ref.badge_color}" style="font-size:.72rem">${ref.badge_text}</span>
+          <span style="font-size:.75rem;color:var(--gray-400)">${ref.date_text}</span>
+        </div>
+      </div>
+      <div class="ref-card-body">
+        <div class="ref-card-title">${ref.title}</div>
+        <div class="ref-card-location">${PIN_SVG_CARD} ${ref.location}</div>
+        <p class="ref-card-desc">${ref.description}</p>
+        <div class="ref-card-tags">${tagsHtml(ref.card_tags)}</div>
+      </div>
+      <div class="ref-card-footer">
+        <div class="ref-card-stars">${starsHtml(ref.stars)}</div>
+        <button class="btn-details" onclick="openModal('${modalId}')">
+          Részletek ${ARROW_SVG}
+        </button>
+      </div>
+    </div>`;
+}
+
+function buildModal(ref) {
+  const modalId = `modal-${ref.id}`;
+  const metaHtml = ref.modal_meta.map(m => `
+    <div class="modal-meta-item">
+      <div class="modal-meta-label">${m.label}</div>
+      <div class="modal-meta-value">${m.value}</div>
+    </div>`).join('');
+  const resultsHtml = ref.modal_results.map(r => `<li>${r}</li>`).join('');
+
+  return `
+    <div class="modal-overlay" id="${modalId}" onclick="closeOnBackdrop(event,'${modalId}')">
+      <div class="modal-box">
+        <div class="modal-header">
+          <div class="modal-header-icon">${ref.modal_icon}</div>
+          <div class="modal-header-text">
+            <h2>${ref.modal_title}</h2>
+            <div class="modal-location">${PIN_SVG_MODAL} ${ref.modal_location}</div>
+          </div>
+          <button class="modal-close" onclick="closeModal('${modalId}')">${CLOSE_SVG}</button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-meta-grid">${metaHtml}</div>
+          <div class="modal-section">
+            <div class="modal-section-title">A helyzet</div>
+            <p>${ref.modal_situation}</p>
+          </div>
+          <div class="modal-section">
+            <div class="modal-section-title">A megoldás</div>
+            <p>${ref.modal_solution}</p>
+          </div>
+          <div class="modal-results">
+            <div class="modal-results-title">📊 Eredmények</div>
+            <ul>${resultsHtml}</ul>
+          </div>
+          <div class="modal-tags">${tagsHtml(ref.modal_tags)}</div>
+        </div>
+        <div class="modal-footer">
+          <div>
+            <div class="modal-stars">${starsHtml(ref.stars)}</div>
+            <div class="modal-reviewer">${ref.reviewer_text}</div>
+          </div>
+          <a href="kapcsolat.html" class="btn btn-dark" style="font-size:.85rem;padding:.6rem 1.1rem">Hasonlót kérek →</a>
+        </div>
+      </div>
+    </div>`;
+}
+
+/* ============================================================
+   SUPABASE ADATBETÖLTÉS
+   ============================================================ */
+async function loadReferences() {
+  const grid = document.getElementById('refGrid');
+  const modalContainer = document.getElementById('modalContainer');
+
+  try {
+    const { createClient } = supabase;
+    const db = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+    const { data, error } = await db
+      .from('referenciak')
+      .select('*')
+      .order('id', { ascending: true });
+
+    if (error) throw error;
+    if (!data || data.length === 0) throw new Error('Nincsenek referenciák az adatbázisban.');
+
+    // Kártyák kirajzolása
+    grid.innerHTML = data.map(buildCard).join('');
+
+    // Modálok kirajzolása
+    modalContainer.innerHTML = data.map(buildModal).join('');
+
+    // Stat számláló animáció
+    animateCount(document.getElementById('statCount'), data.length, 800);
+
+  } catch (err) {
+    console.error('Supabase hiba:', err);
+    grid.innerHTML = `
+      <div class="error-state">
+        <div class="error-icon">⚠️</div>
+        <p>Nem sikerült betölteni a referenciákat.</p>
+        <code>${err.message || err}</code>
+        <p style="margin-top:.75rem;font-size:.82rem">
+          Ellenőrizd a SUPABASE_URL és SUPABASE_ANON értékeket a fájl script blokkjában.
+        </p>
+      </div>`;
+  }
+}
+
+// Betöltés indítása
+loadReferences();
+</script>
+</body>
+</html>
